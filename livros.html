@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Livros</title>
+</head>
+<body>
+
+  <h2>Cadastro de Livros</h2>
+
+  <input type="text" id="nomeLivro" placeholder="Nome do livro">
+  <button onclick="salvarLivro()">Salvar</button>
+
+  <ul id="listaLivros"></ul>
+
+  <script>
+    function salvarLivro() {
+      let nome = document.getElementById("nomeLivro").value;
+
+      let li = document.createElement("li");
+      li.textContent = nome;
+
+      document.getElementById("listaLivros").appendChild(li);
+    }
+  </script>
+
+</body>
+</html>
