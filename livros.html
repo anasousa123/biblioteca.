@@ -1,163 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Cadastro de Livros</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Livros</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav class="navbar navbar-dark bg-dark mb-4">
-<div class="container">
-<a class="navbar-brand">Biblioteca</a>
-<ul class="navbar-nav flex-row">
-<li class="nav-item mx-2"><a class="nav-link" href="index.html">Início</a></li>
-<li class="nav-item mx-2"><a class="nav-link" href="alunos.html">Alunos</a></li>
-<li class="nav-item mx-2"><a class="nav-link" href="emprestimo.html">Empréstimos</a></li>
-</ul>
-</div>
-</nav>
+<h2>Livros</h2>
 
-<main class="container">
+<input id="nomeLivro" placeholder="Nome do livro">
+<button onclick="addLivro()">Cadastrar</button>
 
-<h2>Cadastrar Novo Livro</h2>
+<ul id="listaLivros"></ul>
 
-<form onsubmit="event.preventDefault(); cadastrar();" class="row g-3 mb-5">
-
-<div class="col-md-3">
-<label>ID</label>
-<input type="number" id="id" class="form-control" required min="1">
-</div>
-
-<div class="col-md-6">
-<label>Nome</label>
-<input type="text" id="nome" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>Autor</label>
-<input type="text" id="autor" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>Gênero</label>
-<input type="text" id="genero" class="form-control" required>
-</div>
-
-<div class="col-md-3">
-<label>Exemplares</label>
-<input type="number" id="exemplares" class="form-control" required min="1" value="1">
-</div>
-
-<button class="btn btn-primary">Cadastrar</button>
-
-</form>
-
-<h2>Lista de Livros</h2>
-
-<table class="table table-bordered">
-<thead class="table-dark">
-<tr>
-<th>ID</th>
-<th>Nome</th>
-<th>Autor</th>
-<th>Gênero</th>
-<th>Exemplares</th>
-<th>Ações</th>
-</tr>
-</thead>
-
-<tbody id="tabela"></tbody>
-
-</table>
-
-</main>
-
-<script>
-
-// ===== BANCO LOCAL =====
-let livros = JSON.parse(localStorage.getItem("livros")) || [];
-
-// ===== CADASTRAR =====
-function cadastrar(){
-
-let id = document.getElementById("id").value;
-let nome = document.getElementById("nome").value;
-let autor = document.getElementById("autor").value;
-let genero = document.getElementById("genero").value;
-let exemplares = parseInt(document.getElementById("exemplares").value);
-
-if(!id || !nome || !autor || !genero){
-alert("Preencha todos os campos");
-return;
-}
-
-if(exemplares <= 0){
-alert("Exemplares inválidos");
-return;
-}
-
-// impedir ID duplicado
-if(livros.find(l => l.id == id)){
-alert("ID já existe");
-return;
-}
-
-livros.push({
-id: id,
-nome: nome,
-autor: autor,
-genero: genero,
-exemplares: exemplares,
-disponivel: true
-});
-
-salvar();
-document.querySelector("form").reset();
-listar();
-}
-
-// ===== LISTAR =====
-function listar(){
-
-let tabela = document.getElementById("tabela");
-tabela.innerHTML = "";
-
-livros.forEach((l,i)=>{
-tabela.innerHTML += `
-<tr>
-<td>${l.id}</td>
-<td>${l.nome}</td>
-<td>${l.autor}</td>
-<td>${l.genero}</td>
-<td>${l.exemplares}</td>
-<td>
-<button class="btn btn-danger btn-sm" onclick="excluir(${i})">Excluir</button>
-</td>
-</tr>
-`;
-});
-}
-
-// ===== EXCLUIR =====
-function excluir(i){
-if(confirm("Excluir livro?")){
-livros.splice(i,1);
-salvar();
-listar();
-}
-}
-
-// ===== SALVAR =====
-function salvar(){
-localStorage.setItem("livros", JSON.stringify(livros));
-}
-
-// ===== INICIAR =====
-listar();
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
