@@ -1,47 +1,22 @@
-/* Personalização da navbar com logo */
+body {
+background:#f5f6fa;
+}
+
 .custom-navbar {
-  background-color: #370c0c; /* vinho escuro */
-}
-
-.navbar-brand img {
-  border-radius: 8px;
-  object-fit: cover;
+background:#370c0c;
 }
 
 .hero-section {
-  background-image: url('fundo.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
+background:url('../img/fundo.jpg') center/cover no-repeat;
+min-height:90vh;
 }
 
-/* Zoom nos cards ao passar o mouse */
-.card {
-  transition: transform 0.2s ease-in-out;
-}
-.card:hover {
-  transform: scale(1.03);
+.overlay {
+background:rgba(0,0,0,0.6);
+padding:50px;
 }
 
-/* Estilo para a hero section com imagem de fundo */
-.hero-section {
-  background-image: url('fundo.jpg'); /* Substitua por sua imagem real */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.hero-section .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* sobreposição escura */
-  padding: 60px 0;
-}
-
-/* Rodapé (se for usar) */
-footer {
-  margin-top: 60px;
-  padding: 20px;
-  background-color: #f8f9fa;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #6c757d;
+.btn-primary {
+background:#370c0c;
+border:none;
 }
