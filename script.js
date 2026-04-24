@@ -1,192 +1,144 @@
-// ===== BANCO LOCAL =====
-let alunos = JSON.parse(localStorage.getItem("alunos")) || ["Ana","João","Maria"];
-
-let livros = JSON.parse(localStorage.getItem("livros")) || [
-  {nome:"Dom Casmurro", disponivel:true},
-  {nome:"Harry Potter", disponivel:true}
-];
-
+let alunos = JSON.parse(localStorage.getItem("alunos")) || [];
+let livros = JSON.parse(localStorage.getItem("livros")) || [];
 let emp = JSON.parse(localStorage.getItem("emp")) || [];
 
-// ===== SALVAR =====
 function salvar(){
-  localStorage.setItem("alunos", JSON.stringify(alunos));
-  localStorage.setItem("livros", JSON.stringify(livros));
-  localStorage.setItem("emp", JSON.stringify(emp));
+localStorage.setItem("alunos", JSON.stringify(alunos));
+localStorage.setItem("livros", JSON.stringify(livros));
+localStorage.setItem("emp", JSON.stringify(emp));
 }
 
-// =========================
-// ===== ALUNOS ============
+// ===== ALUNOS =====
 function addAluno(){
-  let nome = document.getElementById("nomeAluno").value.trim();
-  if(!nome) return alert("Digite um nome");
+let nome = document.getElementById("nomeAluno").value;
+if(!nome) return;
 
-  alunos.push(nome);
-  salvar();
-  carregarAlunos();
-  filtrarAlunosSelect();
+alunos.push(nome);
+salvar();
+carregarAlunos();
+carregarSelects();
 }
 
 function carregarAlunos(){
-  let lista = document.getElementById("listaAlunos");
-  if(!lista) return;
+let lista = document.getElementById("listaAlunos");
+if(!lista) return;
 
-  lista.innerHTML = "";
-
-  alunos.forEach((a,i)=>{
-    let li = document.createElement("li");
-    li.innerHTML = `${a} <button onclick="delAluno(${i})">X</button>`;
-    lista.appendChild(li);
-  });
+lista.innerHTML = "";
+alunos.forEach((a,i)=>{
+lista.innerHTML += `<li>${a} <button onclick="delAluno(${i})">X</button></li>`;
+});
 }
 
 function delAluno(i){
-  alunos.splice(i,1);
-  salvar();
-  carregarAlunos();
-  filtrarAlunosSelect();
+alunos.splice(i,1);
+salvar();
+carregarAlunos();
+carregarSelects();
 }
 
-// =========================
-// ===== LIVROS ============
+// ===== LIVROS =====
 function addLivro(){
-  let nome = document.getElementById("nomeLivro").value.trim();
-  if(!nome) return alert("Digite o nome do livro");
+let nome = document.getElementById("nomeLivro").value;
+if(!nome) return;
 
-  livros.push({nome, disponivel:true});
-  salvar();
-  carregarLivros();
-  filtrarLivrosSelect();
+livros.push({nome, disponivel:true});
+salvar();
+carregarLivros();
+carregarSelects();
 }
 
 function carregarLivros(){
-  let lista = document.getElementById("listaLivros");
-  if(!lista) return;
+let lista = document.getElementById("listaLivros");
+if(!lista) return;
 
-  lista.innerHTML = "";
-
-  livros.forEach((l,i)=>{
-    let li = document.createElement("li");
-    li.innerHTML = `${l.nome} ${l.disponivel ? "" : "(emprestado)"} 
-    <button onclick="delLivro(${i})">X</button>`;
-    lista.appendChild(li);
-  });
+lista.innerHTML = "";
+livros.forEach((l,i)=>{
+lista.innerHTML += `<li>${l.nome} ${l.disponivel ? "" : "(emprestado)"} 
+<button onclick="delLivro(${i})">X</button></li>`;
+});
 }
 
 function delLivro(i){
-  livros.splice(i,1);
-  salvar();
-  carregarLivros();
-  filtrarLivrosSelect();
+livros.splice(i,1);
+salvar();
+carregarLivros();
+carregarSelects();
 }
 
-// =========================
-// ===== SELECT ALUNOS =====
-function filtrarAlunosSelect(){
-  let sel = document.getElementById("selAluno");
-  if(!sel) return;
+// ===== SELECTS =====
+function carregarSelects(){
+let sa = document.getElementById("selAluno");
+let sl = document.getElementById("selLivro");
 
-  sel.innerHTML = "<option value=''>Selecione um aluno</option>";
-
-  alunos.forEach(a=>{
-    let op = document.createElement("option");
-    op.value = a;
-    op.textContent = a;
-    sel.appendChild(op);
-  });
+if(sa){
+sa.innerHTML = "<option>Aluno</option>";
+alunos.forEach(a=>{
+sa.innerHTML += `<option>${a}</option>`;
+});
 }
 
-// =========================
-// ===== SELECT LIVROS =====
-function filtrarLivrosSelect(){
-  let sel = document.getElementById("selLivro");
-  if(!sel) return;
-
-  sel.innerHTML = "<option value=''>Selecione um livro</option>";
-
-  livros
-    .filter(l => l.disponivel)
-    .forEach(l=>{
-      let op = document.createElement("option");
-      op.value = l.nome;
-      op.textContent = l.nome;
-      sel.appendChild(op);
-    });
+if(sl){
+sl.innerHTML = "<option>Livro</option>";
+livros.filter(l=>l.disponivel).forEach(l=>{
+sl.innerHTML += `<option>${l.nome}</option>`;
+});
+}
 }
 
-// =========================
-// ===== EMPRESTAR =========
+// ===== EMPRESTIMO =====
 function emprestar(){
-  let aluno = document.getElementById("selAluno").value;
-  let livroNome = document.getElementById("selLivro").value;
+let aluno = document.getElementById("selAluno").value;
+let livroNome = document.getElementById("selLivro").value;
 
-  if(!aluno || !livroNome){
-    alert("Selecione aluno e livro");
-    return;
-  }
+let livro = livros.find(l=>l.nome === livroNome);
 
-  let livro = livros.find(l => l.nome === livroNome);
-
-  if(!livro || !livro.disponivel){
-    alert("Livro indisponível");
-    return;
-  }
-
-  livro.disponivel = false;
-
-  let hoje = new Date();
-
-  emp.push({
-    aluno: aluno,
-    livro: livroNome,
-    data: hoje.toLocaleDateString()
-  });
-
-  salvar();
-  atualizarEmp();
-  carregarLivros();
-  filtrarLivrosSelect();
+if(!livro || !livro.disponivel){
+alert("Livro indisponível");
+return;
 }
 
-// =========================
-// ===== LISTAR EMP ========
+livro.disponivel = false;
+
+emp.push({
+aluno,
+livro: livroNome,
+data: new Date().toLocaleDateString()
+});
+
+salvar();
+atualizarEmp();
+carregarSelects();
+}
+
+// ===== LISTAR =====
 function atualizarEmp(){
-  let lista = document.getElementById("listaEmprestimos");
-  if(!lista) return;
+let lista = document.getElementById("listaEmprestimos");
+if(!lista) return;
 
-  lista.innerHTML = "";
+lista.innerHTML = "";
 
-  emp.forEach((e,i)=>{
-    let li = document.createElement("li");
-    li.innerHTML = `${e.aluno} → ${e.livro} (${e.data})
-    <button onclick="devolver(${i})">Devolver</button>`;
-    lista.appendChild(li);
-  });
+emp.forEach((e,i)=>{
+lista.innerHTML += `<li>${e.aluno} → ${e.livro} 
+<button onclick="devolver(${i})">Devolver</button></li>`;
+});
 }
 
-// =========================
-// ===== DEVOLVER ==========
+// ===== DEVOLVER =====
 function devolver(i){
-  let livro = livros.find(l => l.nome === emp[i].livro);
+let livro = livros.find(l=>l.nome === emp[i].livro);
+if(livro) livro.disponivel = true;
 
-  if(livro){
-    livro.disponivel = true;
-  }
+emp.splice(i,1);
 
-  emp.splice(i,1);
-
-  salvar();
-  atualizarEmp();
-  carregarLivros();
-  filtrarLivrosSelect();
+salvar();
+atualizarEmp();
+carregarSelects();
 }
 
-// =========================
-// ===== INICIAR ===========
+// ===== INIT =====
 window.onload = function(){
-  carregarAlunos();
-  carregarLivros();
-  filtrarAlunosSelect();
-  filtrarLivrosSelect();
-  atualizarEmp();
+carregarAlunos();
+carregarLivros();
+carregarSelects();
+atualizarEmp();
 };
