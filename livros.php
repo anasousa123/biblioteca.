@@ -69,8 +69,8 @@ if (isset($_GET['excluir'])) {
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="alunos.php">Alunos</a></li>
-                <li class="nav-item"><a class="nav-link" href="emprestimos.php">Empréstimos</a></li>
+                <li class="nav-item"><a class="nav-link" href="alunos.html">Alunos</a></li>
+                <li class="nav-item"><a class="nav-link" href="emprestimos.html">Empréstimos</a></li>
             </ul>
         </div>
     </div>
