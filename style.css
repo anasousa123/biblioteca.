@@ -45,3 +45,29 @@ footer {
   font-size: 0.9rem;
   color: #6c757d;
 }
+
+button:hover {
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+
+.hero {
+  background: url('fundo.jpg') center/cover;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  top: 0;
+}
+
+
+@media (max-width: 768px){
+  .cards {
+    flex-direction: column;
+  }
+}
