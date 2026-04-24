@@ -1,17 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Biblioteca Escolar</title>
+<meta charset="UTF-8">
+<title>Biblioteca Escolar</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f4f4;
+}
+
+/* MENU */
+.menu {
+  background: #2c3e50;
+  padding: 15px;
+  text-align: center;
+}
+
+.menu button {
+  background: #34495e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu button:hover {
+  background: #1abc9c;
+}
+
+/* CONTEÚDO */
+.conteudo {
+  padding: 20px;
+  display: none;
+}
+
+.ativo {
+  display: block;
+}
+
+/* FORM */
+input {
+  padding: 10px;
+  margin: 5px;
+  width: 250px;
+}
+
+button.salvar {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+ul {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>Biblioteca Escolar 📚</h1>
+<div class="menu">
+  <button onclick="mostrar('inicio')">Início</button>
+  <button onclick="mostrar('livros')">Livros</button>
+  <button onclick="mostrar('alunos')">Alunos</button>
+</div>
 
-  <nav>
-    <a href="livros.html">Cadastrar Livros</a><br>
-    <a href="alunos.html">Cadastrar Alunos</a>
-  </nav>
+<!-- INICIO -->
+<div id="inicio" class="conteudo ativo">
+  <h1>📚 Biblioteca Escolar</h1>
+  <p>Sistema de gerenciamento de livros e alunos</p>
+</div>
+
+<!-- LIVROS -->
+<div id="livros" class="conteudo">
+  <h2>Cadastro de Livros</h2>
+
+  <input type="text" id="nomeLivro" placeholder="Nome do livro">
+  <button class="salvar" onclick="addLivro()">Cadastrar</button>
+
+  <ul id="listaLivros"></ul>
+</div>
+
+<!-- ALUNOS -->
+<div id="alunos" class="conteudo">
+  <h2>Cadastro de Alunos</h2>
+
+  <input type="text" id="nomeAluno" placeholder="Nome do aluno">
+  <button class="salvar" onclick="addAluno()">Cadastrar</button>
+
+  <ul id="listaAlunos"></ul>
+</div>
+
+<script>
+// TROCAR ABAS
+function mostrar(secao) {
+  let abas = document.querySelectorAll('.conteudo');
+  abas.forEach(div => div.classList.remove('ativo'));
+
+  document.getElementById(secao).classList.add('ativo');
+}
+
+// LISTAS
+let livros = [];
+let alunos = [];
+
+// LIVROS
+function addLivro() {
+  let nome = document.getElementById("nomeLivro").value;
+
+  if(nome === "") {
+    alert("Digite o nome do livro");
+    return;
+  }
+
+  livros.push(nome);
+  atualizarLivros();
+  document.getElementById("nomeLivro").value = "";
+}
+
+function atualizarLivros() {
+  let lista = document.getElementById("listaLivros");
+  lista.innerHTML = "";
+
+  livros.forEach(livro => {
+    let li = document.createElement("li");
+    li.textContent = livro;
+    lista.appendChild(li);
+  });
+}
+
+// ALUNOS
+function addAluno() {
+  let nome = document.getElementById("nomeAluno").value;
+
+  if(nome === "") {
+    alert("Digite o nome do aluno");
+    return;
+  }
+
+  alunos.push(nome);
+  atualizarAlunos();
+  document.getElementById("nomeAluno").value = "";
+}
+
+function atualizarAlunos() {
+  let lista = document.getElementById("listaAlunos");
+  lista.innerHTML = "";
+
+  alunos.forEach(aluno => {
+    let li = document.createElement("li");
+    li.textContent = aluno;
+    lista.appendChild(li);
+  });
+}
+</script>
 
 </body>
 </html>
