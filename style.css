@@ -1,42 +1,79 @@
-/* Personalização da navbar com logo */
+
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* NAVBAR */
 .custom-navbar {
-  background-color: #370c0c; /* vinho escuro */
+  background-color: #370c0c;
 }
 
 .navbar-brand img {
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
 }
 
+/* HERO SECTION */
 .hero-section {
-  background-image: url('fundo.jpg');
-  background-size: cover;
-  background-position: center;
+  background: url('fundo.jpg') center/cover no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
-/* Zoom nos cards ao passar o mouse */
-.card {
-  transition: transform 0.2s ease-in-out;
-}
-.card:hover {
-  transform: scale(1.03);
-}
-
-/* Estilo para a hero section com imagem de fundo */
-.hero-section {
-  background-image: url('fundo.jpg'); /* Substitua por sua imagem real */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
+/* OVERLAY ESCURO */
 .hero-section .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* sobreposição escura */
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
   padding: 60px 0;
 }
 
-/* Rodapé (se for usar) */
+/* TEXTOS */
+.hero-section h1 {
+  font-weight: bold;
+}
+
+.hero-section p {
+  font-size: 18px;
+}
+
+/* CARDS */
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+}
+
+/* BOTÕES */
+button, .btn {
+  transition: 0.3s;
+}
+
+button:hover, .btn:hover {
+  transform: scale(1.05);
+}
+
+/* TABELAS */
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* FORMULÁRIOS */
+input, select {
+  border-radius: 8px !important;
+}
+
+/* RODAPÉ */
 footer {
   margin-top: 60px;
   padding: 20px;
@@ -46,28 +83,14 @@ footer {
   color: #6c757d;
 }
 
-button:hover {
-  transform: scale(1.05);
-  transition: 0.3s;
-}
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+    padding: 20px;
+  }
 
-.hero {
-  background: url('fundo.jpg') center/cover;
-  position: relative;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  top: 0;
-}
-
-
-@media (max-width: 768px){
-  .cards {
-    flex-direction: column;
+  .card {
+    margin-bottom: 20px;
   }
 }

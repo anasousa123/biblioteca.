@@ -1,115 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Controle de Empréstimos</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-
-<nav class="navbar navbar-dark bg-dark mb-4">
-<div class="container">
-<a class="navbar-brand">Biblioteca</a>
-<ul class="navbar-nav flex-row">
-<li class="nav-item mx-2"><a class="nav-link" href="index.html">Início</a></li>
-<li class="nav-item mx-2"><a class="nav-link" href="alunos.html">Alunos</a></li>
-<li class="nav-item mx-2"><a class="nav-link" href="livros.html">Livros</a></li>
-</ul>
-</div>
-</nav>
-
-<main class="container">
-
-<h2>Registrar Empréstimo</h2>
-
-<form onsubmit="event.preventDefault(); emprestar();" class="row g-3 mb-5">
-
-<div class="col-md-6">
-<label>Aluno</label>
-<select id="aluno" class="form-select" required></select>
-</div>
-
-<div class="col-md-6">
-<label>Livro</label>
-<select id="livro" class="form-select" required></select>
-</div>
-
-<div class="col-md-6">
-<label>Data Empréstimo</label>
-<input type="date" id="dataEmp" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>Data Devolução</label>
-<input type="date" id="dataDev" class="form-control" required>
-</div>
-
-<button class="btn btn-primary">Emprestar</button>
-
-</form>
-
-<h3>Pendentes</h3>
-<table class="table table-bordered">
-<thead class="table-dark">
-<tr>
-<th>Aluno</th>
-<th>Livro</th>
-<th>Devolver até</th>
-<th>Ação</th>
-</tr>
-</thead>
-<tbody id="pendentes"></tbody>
-</table>
-
-<h3>Devolvidos</h3>
-<table class="table table-bordered">
-<thead class="table-dark">
-<tr>
-<th>Aluno</th>
-<th>Livro</th>
-<th>Data</th>
-</tr>
-</thead>
-<tbody id="devolvidos"></tbody>
-</table>
-
-</main>
-
-<script>
-
-// ===== BANCO LOCAL =====
-let alunos = JSON.parse(localStorage.getItem("alunos")) || [];
-let livros = JSON.parse(localStorage.getItem("livros")) || [];
-let emp = JSON.parse(localStorage.getItem("emp")) || [];
-
-// ===== CARREGAR SELECT =====
-function carregarSelects(){
-let selA = document.getElementById("aluno");
-let selL = document.getElementById("livro");
-
-selA.innerHTML = "<option value=''>Selecione</option>";
-selL.innerHTML = "<option value=''>Selecione</option>";
-
-alunos.forEach((a,i)=>{
-selA.innerHTML += `<option value="${i}">${a.nome || a}</option>`;
-});
-
-livros.forEach((l,i)=>{
-if(l.disponivel !== false){
-selL.innerHTML += `<option value="${i}">${l.nome}</option>`;
-}
-});
-}
-
-// ===== EMPRESTAR =====
 function emprestar(){
 let a = document.getElementById("aluno").value;
 let l = document.getElementById("livro").value;
 let de = document.getElementById("dataEmp").value;
 let dd = document.getElementById("dataDev").value;
 
-if(!a || !l || !de || !dd){
+if(a === "" || l === "" || !de || !dd){
 alert("Preencha tudo");
 return;
 }
@@ -117,6 +12,11 @@ return;
 if(dd < de){
 alert("Data inválida");
 return;
+}
+
+// garante campo disponível
+if(livros[l].disponivel === undefined){
+livros[l].disponivel = true;
 }
 
 livros[l].disponivel = false;
@@ -131,58 +31,5 @@ status: "pendente"
 
 salvar();
 atualizar();
-}
-
-// ===== DEVOLVER =====
-function devolver(i){
-emp[i].status = "devolvido";
-
-let livro = livros.find(x => x.nome === emp[i].livro);
-if(livro) livro.disponivel = true;
-
-salvar();
-atualizar();
-}
-
-// ===== ATUALIZAR =====
-function atualizar(){
-let p = document.getElementById("pendentes");
-let d = document.getElementById("devolvidos");
-
-p.innerHTML = "";
-d.innerHTML = "";
-
-emp.forEach((e,i)=>{
-if(e.status === "pendente"){
-p.innerHTML += `
-<tr>
-<td>${e.aluno}</td>
-<td>${e.livro}</td>
-<td>${e.devolucao}</td>
-<td><button class="btn btn-success" onclick="devolver(${i})">Devolver</button></td>
-</tr>`;
-} else {
-d.innerHTML += `
-<tr>
-<td>${e.aluno}</td>
-<td>${e.livro}</td>
-<td>${e.devolucao}</td>
-</tr>`;
-}
-});
-}
-
-// ===== SALVAR =====
-function salvar(){
-localStorage.setItem("emp", JSON.stringify(emp));
-localStorage.setItem("livros", JSON.stringify(livros));
-}
-
-// ===== INICIAR =====
 carregarSelects();
-atualizar();
-
-</script>
-
-</body>
-</html>
+}
