@@ -1,12 +1,14 @@
 body {
   font-family: Arial;
+  background: #121212;
+  color: white;
   margin: 0;
-  background: #f4f4f4;
+  padding: 20px;
 }
 
 nav {
-  background: #2c3e50;
-  padding: 15px;
+  background: #1f1f1f;
+  padding: 10px;
   text-align: center;
 }
 
@@ -14,15 +16,15 @@ nav a {
   color: white;
   margin: 10px;
   text-decoration: none;
-  font-weight: bold;
 }
 
-nav a:hover {
-  color: #1abc9c;
-}
-
-.container {
-  padding: 20px;
+button {
+  padding: 10px;
+  margin: 5px;
+  background: #1abc9c;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 input, select {
@@ -30,16 +32,7 @@ input, select {
   margin: 5px;
 }
 
-button {
-  padding: 10px;
-  background: #27ae60;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 ul {
-  background: white;
+  background: #1f1f1f;
   padding: 10px;
-  border-radius: 5px;
 }

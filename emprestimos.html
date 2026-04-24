@@ -8,22 +8,23 @@
 <body>
 
 <nav>
-  <a href="index.html">Início</a>
-  <a href="livros.html">Livros</a>
-  <a href="alunos.html">Alunos</a>
-  <a href="emprestimos.html">Empréstimos</a>
+  <a href="emprestimo.html">📚 Empréstimos</a>
+  <a href="alunos.html">👤 Alunos</a>
+  <a href="livros.html">📖 Livros</a>
 </nav>
 
-<div class="container">
-  <h2>Registrar Empréstimo</h2>
+<h2>Registrar Empréstimo</h2>
 
-  <select id="selectAluno"></select>
-  <select id="selectLivro"></select>
+<input id="buscaAluno" placeholder="Buscar aluno" oninput="filtrarAlunosSelect()">
+<select id="selAluno"></select>
 
-  <button onclick="registrarEmprestimo()">Registrar</button>
+<input id="buscaLivro" placeholder="Buscar livro" oninput="filtrarLivrosSelect()">
+<select id="selLivro"></select>
 
-  <ul id="listaEmprestimos"></ul>
-</div>
+<button onclick="emprestar()">Emprestar</button>
+
+<h3>Controle</h3>
+<ul id="listaEmprestimos"></ul>
 
 <script src="script.js"></script>
 </body>

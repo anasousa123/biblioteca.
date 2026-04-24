@@ -2,22 +2,26 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Biblioteca Escolar</title>
+<title>Login</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Início</a>
-  <a href="livros.html">Livros</a>
-  <a href="alunos.html">Alunos</a>
-  <a href="emprestimos.html">Empréstimos</a>
-</nav>
-
-<div class="container">
-  <h1>📚 Biblioteca Escolar</h1>
-  <p>Sistema de gerenciamento de livros e alunos</p>
+<div class="login">
+  <h2>📚 Biblioteca</h2>
+  <input id="user" placeholder="Usuário">
+  <button onclick="entrar()">Entrar</button>
 </div>
+
+<script>
+function entrar(){
+  let user = document.getElementById("user").value;
+  if(!user) return alert("Digite um usuário");
+
+  localStorage.setItem("usuario", user);
+  window.location.href = "emprestimo.html";
+}
+</script>
 
 </body>
 </html>
