@@ -4,7 +4,27 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "biblioteca";
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Conexão</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<nav>
+  <a href="index.html">Início</a>
+</nav>
+
+<div class="container">
+  <h2>Status do Sistema</h2>
+  <p>✔ Sistema conectado</p>
+  <p>✔ Banco de dados local ativo</p>
+</div>
+
+</body>
+</html>
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {

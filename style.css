@@ -1,47 +1,45 @@
-/* Personalização da navbar com logo */
-.custom-navbar {
-  background-color: #370c0c; /* vinho escuro */
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f4f4;
 }
 
-.navbar-brand img {
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.hero-section {
-  background-image: url('fundo.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-/* Zoom nos cards ao passar o mouse */
-.card {
-  transition: transform 0.2s ease-in-out;
-}
-.card:hover {
-  transform: scale(1.03);
-}
-
-/* Estilo para a hero section com imagem de fundo */
-.hero-section {
-  background-image: url('fundo.jpg'); /* Substitua por sua imagem real */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.hero-section .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* sobreposição escura */
-  padding: 60px 0;
-}
-
-/* Rodapé (se for usar) */
-footer {
-  margin-top: 60px;
-  padding: 20px;
-  background-color: #f8f9fa;
+nav {
+  background: #2c3e50;
+  padding: 15px;
   text-align: center;
-  font-size: 0.9rem;
-  color: #6c757d;
+}
+
+nav a {
+  color: white;
+  margin: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #1abc9c;
+}
+
+.container {
+  padding: 20px;
+}
+
+input, select {
+  padding: 10px;
+  margin: 5px;
+}
+
+button {
+  padding: 10px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
 }
