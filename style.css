@@ -1,47 +1,68 @@
-/* Personalização da navbar com logo */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f6fa;
+}
+
+/* NAVBAR */
 .custom-navbar {
-  background-color: #370c0c; /* vinho escuro */
+  background: linear-gradient(90deg, #370c0c, #5a1a1a);
 }
 
-.navbar-brand img {
-  border-radius: 8px;
-  object-fit: cover;
+.navbar-brand span {
+  font-weight: 600;
 }
 
+/* HERO */
 .hero-section {
-  background-image: url('fundo.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
+  background: url('../img/fundo.jpg') center/cover no-repeat;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
 }
 
-/* Zoom nos cards ao passar o mouse */
-.card {
-  transition: transform 0.2s ease-in-out;
-}
-.card:hover {
-  transform: scale(1.03);
-}
-
-/* Estilo para a hero section com imagem de fundo */
-.hero-section {
-  background-image: url('fundo.jpg'); /* Substitua por sua imagem real */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.hero-section .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* sobreposição escura */
+.overlay {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
   padding: 60px 0;
 }
 
-/* Rodapé (se for usar) */
-footer {
-  margin-top: 60px;
-  padding: 20px;
-  background-color: #f8f9fa;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #6c757d;
+/* TITULO */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* CARDS */
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+/* BOTÕES */
+.btn-primary {
+  background-color: #370c0c;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-primary:hover {
+  background-color: #5a1a1a;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
 }
