@@ -15,7 +15,7 @@ body {
 
 /* HERO */
 .hero-section {
-  background: url('../img/fundo.jpg') center/cover no-repeat;
+  background: url('fundo.jpg') center/cover no-repeat;
   min-height: 90vh;
   display: flex;
   align-items: center;
