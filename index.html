@@ -1,80 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Portal Literário René +</title>
 
-<title>Biblioteca Escolar</title>
+  <!-- Bootstrap correto -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap correto -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Seu CSS -->
-<link rel="stylesheet" href="style.css">
+  <!-- Seu CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar py-3 shadow">
-<div class="container">
-<a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-<img src="logo.png" alt="Logo" width="70" height="70">
-<span class="fs-5 fw-bold">Portal Literário René +</span>
-</a>
-</div>
-</nav>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+        <img src="logo.png" width="60" height="60">
+        <span class="fs-5 fw-bold">Portal Literário René +</span>
+      </a>
+    </div>
+  </nav>
 
-<section class="hero-section">
-<div class="overlay">
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="overlay">
+      <div class="container text-center text-white">
 
-<div class="container text-center py-5">
+        <h1 class="mb-3">Bem-vindo à nossa Biblioteca</h1>
+        <p class="lead mb-5">Sistema completo de gerenciamento</p>
 
-<h1 class="mb-3 text-white fw-bold">
-Bem-vindo à nossa Biblioteca
-</h1>
+        <div class="row justify-content-center g-4">
 
-<p class="lead mb-5 text-white">
-Escolha uma das opções abaixo
-</p>
+          <!-- ALUNOS -->
+          <div class="col-md-3">
+            <div class="card shadow-lg">
+              <div class="card-body">
+                <h5 class="card-title">Alunos</h5>
+                <p class="card-text">Cadastro e gerenciamento de alunos</p>
+                <a href="alunos.html" class="btn btn-primary">Acessar</a>
+              </div>
+            </div>
+          </div>
 
-<div class="row justify-content-center g-4">
+          <!-- LIVROS -->
+          <div class="col-md-3">
+            <div class="card shadow-lg">
+              <div class="card-body">
+                <h5 class="card-title">Livros</h5>
+                <p class="card-text">Controle completo do acervo</p>
+                <a href="livros.html" class="btn btn-primary">Acessar</a>
+              </div>
+            </div>
+          </div>
 
-<div class="col-md-3">
-<div class="card shadow border-0">
-<div class="card-body">
-<h5 class="card-title">Gerenciar Alunos</h5>
-<p class="card-text">Cadastre, edite e exclua alunos.</p>
-<a href="alunos.html" class="btn btn-primary w-100">Acessar</a>
-</div>
-</div>
-</div>
+          <!-- EMPRESTIMOS -->
+          <div class="col-md-3">
+            <div class="card shadow-lg">
+              <div class="card-body">
+                <h5 class="card-title">Empréstimos</h5>
+                <p class="card-text">Controle de entradas e devoluções</p>
+                <a href="emprestimos.html" class="btn btn-primary">Acessar</a>
+              </div>
+            </div>
+          </div>
 
-<div class="col-md-3">
-<div class="card shadow border-0">
-<div class="card-body">
-<h5 class="card-title">Gerenciar Livros</h5>
-<p class="card-text">Cadastre e consulte os livros.</p>
-<a href="livros.html" class="btn btn-primary w-100">Acessar</a>
-</div>
-</div>
-</div>
+        </div>
 
-<div class="col-md-3">
-<div class="card shadow border-0">
-<div class="card-body">
-<h5 class="card-title">Empréstimos</h5>
-<p class="card-text">Controle completo dos empréstimos.</p>
-<a href="emprestimos.html" class="btn btn-primary w-100">Acessar</a>
-</div>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</section>
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>

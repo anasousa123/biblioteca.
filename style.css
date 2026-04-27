@@ -1,36 +1,25 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f6fa;
-}
-
 /* NAVBAR */
 .custom-navbar {
-  background: linear-gradient(90deg, #370c0c, #5a1a1a);
-}
-
-.navbar-brand span {
-  font-weight: 600;
+  background: linear-gradient(90deg, #370c0c, #5a0f0f);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 /* HERO */
 .hero-section {
-  background: url('fundo.jpg') center/cover no-repeat;
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
+  background-image: url('fundo.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }
 
 .overlay {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 60px 0;
-}
-
-/* TITULO */
-h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
+  background: linear-gradient(
+    rgba(0,0,0,0.6),
+    rgba(55,12,12,0.7)
+  );
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 /* CARDS */
@@ -41,28 +30,26 @@ h1 {
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
 }
 
-.card-title {
-  font-weight: 600;
-}
-
-/* BOTÕES */
+/* BOTÃO */
 .btn-primary {
-  background-color: #370c0c;
+  background-color: #5a0f0f;
   border: none;
   border-radius: 8px;
+  width: 100%;
+  transition: 0.3s;
 }
 
 .btn-primary:hover {
-  background-color: #5a1a1a;
+  background-color: #8b1a1a;
+  transform: scale(1.05);
 }
 
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
+/* TEXTO */
+h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
 }
