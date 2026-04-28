@@ -1,4 +1,4 @@
-import { db } from "./firebase.js";
+import { db } from "java.script";
 import {
 collection, addDoc, getDocs, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
@@ -11,11 +11,11 @@ form.addEventListener("submit", async (e)=>{
 e.preventDefault();
 
 await addDoc(collection(db,"livros"),{
-id: idLivro.value,
-nome: nomeLivro.value,
-autor: autor.value,
-genero: genero.value,
-exemplares: exemplares.value
+const idLivro = document.getElementById("idLivro");
+const nomeLivro = document.getElementById("nomeLivro");
+const autor = document.getElementById("autor");
+const genero = document.getElementById("genero");
+const exemplares = document.getElementById("exemplares");
 });
 
 form.reset();
