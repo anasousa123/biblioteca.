@@ -5,9 +5,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.1/firebas
 
 // SUA CONFIG (a que você mandou)
 const firebaseConfig = {
-  apiKey: "AIzaSyClUVg-jBh6ufj0j-7nKZscvUiqIVnc0UA",
-  authDomain: "biblioteca-60ede.firebaseapp.com",
-  projectId: "biblioteca-60ede",
+  apiKey: "AIzaSyCFgXof_YQeQ1DTUejWNRpuOqx_Q_tm7BY",
+  authDomain: "biblioteca-5ecba.firebaseapp.com",
+  projectId: "biblioteca-5ecba",
+  storageBucket: "biblioteca-5ecba.firebasestorage.app",
+  messagingSenderId: "782971800302",
+  appId: "1:782971800302:web:54b0666051d47d11b641ff",
+  measurementId: "G-032SPYTXRE"
 };
 
 // Inicializa
