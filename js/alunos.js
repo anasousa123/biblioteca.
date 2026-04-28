@@ -18,6 +18,8 @@ const email = document.getElementById("email");
 form.addEventListener("submit", async (e)=>{
 e.preventDefault();
 
+console.log("CLIQUE DETECTADO");
+
 try {
 await addDoc(collection(db,"alunos"),{
 nome: nome.value,
