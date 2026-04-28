@@ -1,3 +1,4 @@
+console.log("JS FUNCIONANDO");
 import { db } from "./firebase.js";
 import { collection, addDoc, getDocs, deleteDoc, doc } 
 from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
