@@ -5,19 +5,30 @@ from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 const form = document.getElementById("formAluno");
 const tabela = document.getElementById("tabela");
 
+// PEGAR CAMPOS
+const nome = document.getElementById("nome");
+const turma = document.getElementById("turma");
+const nivel = document.getElementById("nivel");
+const email = document.getElementById("email");
+
 // CADASTRAR
 form.addEventListener("submit", async (e)=>{
 e.preventDefault();
 
+try {
 await addDoc(collection(db,"alunos"),{
-nome:nome.value,
-turma:turma.value,
-nivel:nivel.value,
-email:email.value
+nome: nome.value,
+turma: turma.value,
+nivel: nivel.value,
+email: email.value
 });
 
 form.reset();
 carregar();
+
+} catch (erro) {
+console.error("Erro ao cadastrar:", erro);
+}
 });
 
 // LISTAR
