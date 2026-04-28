@@ -16,25 +16,28 @@ const email = document.getElementById("email");
 
 // CADASTRAR
 form.addEventListener("submit", async (e)=>{
-e.preventDefault();
+  e.preventDefault();
 
-console.log("CLIQUE DETECTADO");
+  console.log("CLIQUE DETECTADO");
 
-try {
-await addDoc(collection(db,"alunos"),{
-nome: nome.value,
-turma: turma.value,
-nivel: nivel.value,
-email: email.value
-});
+  try {
+    const docRef = await addDoc(collection(db,"alunos"),{
+      nome: nome.value,
+      turma: turma.value,
+      nivel: nivel.value,
+      email: email.value
+    });
 
-form.reset();
-carregar();
+    console.log("SALVO COM ID:", docRef.id);
+    alert("Salvou!");
 
-} catch (erro) {
-  console.error("Erro ao cadastrar:", erro);
-  alert("ERRO: " + erro.message);
-}
+    form.reset();
+    carregar();
+
+  } catch (erro) {
+    console.error("ERRO REAL:", erro);
+    alert("ERRO: " + erro.message);
+  }
 });
 
 // LISTAR
