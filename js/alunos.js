@@ -30,7 +30,8 @@ form.reset();
 carregar();
 
 } catch (erro) {
-console.error("Erro ao cadastrar:", erro);
+  console.error("Erro ao cadastrar:", erro);
+  alert("ERRO: " + erro.message);
 }
 });
 
