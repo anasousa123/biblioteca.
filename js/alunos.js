@@ -7,6 +7,7 @@ console.log("JS FUNCIONANDO");
 
 const form = document.getElementById("formAluno");
 console.log("FORM:", form);
+
 const tabela = document.getElementById("tabela");
 
 // PEGAR CAMPOS
