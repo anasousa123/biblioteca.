@@ -6,6 +6,7 @@ from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 console.log("JS FUNCIONANDO");
 
 const form = document.getElementById("formAluno");
+console.log("FORM:", form);
 const tabela = document.getElementById("tabela");
 
 // PEGAR CAMPOS
