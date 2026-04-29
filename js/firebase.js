@@ -4,6 +4,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/fireba
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 // SUA CONFIG (a que você mandou)
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCFgXof_YQeQ1DTUejWNRpuOqx_Q_tm7BY",
   authDomain: "biblioteca-5ecba.firebaseapp.com",
@@ -14,8 +22,7 @@ const firebaseConfig = {
   measurementId: "G-032SPYTXRE"
 };
 
-// Inicializa
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-// Banco
-export const db = getFirestore(app);
