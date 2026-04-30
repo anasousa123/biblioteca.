@@ -1,10 +1,9 @@
-console.log("VERSAO NOVA LIVROS");
 import { db } from "./firebase.js";
 import {
   collection, addDoc, getDocs, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-console.log("JS LIVROS FUNCIONANDO");
+console.log("VERSAO NOVA LIVROS");
 
 const form = document.getElementById("formLivro");
 const tabela = document.getElementById("tabelaLivros");
