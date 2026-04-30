@@ -48,7 +48,7 @@ form.addEventListener("submit", async (e)=>{
       Erro: ${erro.message}
     </div>
   `;
-}
+});
 
 // LISTAR
 async function carregar(){
