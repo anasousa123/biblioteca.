@@ -41,10 +41,14 @@ form.addEventListener("submit", async (e)=>{
     carregar();
 
   } catch (erro) {
-    console.error("ERRO REAL:", erro);
-    alert("ERRO: " + erro.message);
-  }
-});
+  console.error("ERRO REAL:", erro);
+
+  document.getElementById("msg").innerHTML = `
+    <div class="alert alert-danger">
+      Erro: ${erro.message}
+    </div>
+  `;
+}
 
 // LISTAR
 async function carregar(){
