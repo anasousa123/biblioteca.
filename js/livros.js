@@ -1,3 +1,4 @@
+console.log("VERSAO NOVA LIVROS");
 import { db } from "./firebase.js";
 import {
   collection, addDoc, getDocs, deleteDoc, doc
