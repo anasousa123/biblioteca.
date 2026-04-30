@@ -31,7 +31,11 @@ form.addEventListener("submit", async (e)=>{
     });
 
     console.log("SALVO COM ID:", docRef.id);
-    alert("TESTE 123");
+    document.getElementById("msg").innerHTML = `
+  <div class="alert alert-success">
+    Aluno cadastrado com sucesso!
+  </div>
+`;
 
     form.reset();
     carregar();
