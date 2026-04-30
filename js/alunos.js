@@ -16,7 +16,7 @@ import { db } from "./firebase.js";
   console.log("SALVO COM ID:", docRef.id);
    document.getElementById("msg").innerHTML = <div class="alert alert-success"> Aluno cadastrado com sucesso! </div> ;
     form.reset(); carregar(); } catch (erro) { console.error("ERRO REAL:", erro);
-      alert ("ERRO: " + erro.message); } });
+  alert("ERRO: " + erro.message); } });
         // LISTAR 
   async function carregar(){ tabela.innerHTML = ""; const dados = await getDocs(collection(db,"alunos"));
      dados.forEach((item)=>{ tabela.innerHTML += 
