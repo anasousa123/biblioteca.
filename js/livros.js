@@ -35,8 +35,7 @@ form.addEventListener("submit", async (e)=>{
     console.log("LIVRO SALVO:", docRef.id);
     alert("Livro cadastrado!");
 
-    <div id="msgLivro"></div> 
-    
+
     form.reset();
     carregar();
 
