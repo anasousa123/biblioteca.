@@ -3,7 +3,7 @@ import {
   collection, addDoc, getDocs, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-console.log("VERSAO NOVA LIVROS");
+console.log("🔥 TESTE LIVROS NOVO 🔥");
 
 const form = document.getElementById("formLivro");
 const tabela = document.getElementById("tabelaLivros");
@@ -33,7 +33,7 @@ form.addEventListener("submit", async (e)=>{
     });
 
     console.log("LIVRO SALVO:", docRef.id);
-    
+
     document.getElementById("msgLivro").innerHTML = `
   <div class="alert alert-success">
     Livro cadastrado com sucesso!
