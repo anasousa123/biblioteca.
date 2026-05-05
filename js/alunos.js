@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 import { collection, addDoc, getDocs, deleteDoc, doc } 
 from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-console.log("JS FUNCIONANDO");
+console.log("VERSAO NOVA ALUNOS");
 
 const form = document.getElementById("formAluno");
 const tabela = document.getElementById("tabela");
