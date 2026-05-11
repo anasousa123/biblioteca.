@@ -1,6 +1,13 @@
 import { db } from "./firebase.js";
-import { collection, addDoc, getDocs, deleteDoc, doc } 
-from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 console.log("VERSAO NOVA ALUNOS");
 
@@ -55,7 +62,9 @@ form.addEventListener("submit", async (e)=>{
 async function carregar(){
   tabela.innerHTML = "";
 
-  const dados = await getDocs(collection(db,"alunos"));
+  const dados = await getDocs(
+  query(collection(db,"alunos"), orderBy("nome"))
+);
 
   dados.forEach((item)=>{
     tabela.innerHTML += `
