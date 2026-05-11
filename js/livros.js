@@ -49,7 +49,7 @@ form.addEventListener("submit", async (e)=>{
   <div class="alert alert-danger">
     Erro: ${erro.message}
   </div>
-`;
+;
   
 });
 
