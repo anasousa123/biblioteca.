@@ -43,15 +43,15 @@ form.addEventListener("submit", async (e)=>{
     form.reset();
     carregar();
 
-  } catch (erro) {
-  console.error("ERRO AO SALVAR LIVRO:", erro);
+    } catch (erro) {
+    console.error("ERRO AO SALVAR LIVRO:", erro);
 
-  document.getElementById("msgLivro").innerHTML = `
-    <div class="alert alert-danger">
-      Erro: ${erro.message}
-    </div>
-  `;
-}
+    document.getElementById("msgLivro").innerHTML = `
+      <div class="alert alert-danger">
+        Erro: ${erro.message}
+      </div>
+    `;
+  }
 });
 
 
