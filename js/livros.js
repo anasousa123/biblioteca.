@@ -1,9 +1,15 @@
 import { db } from "./firebase.js";
 import {
-  collection, addDoc, getDocs, deleteDoc, doc
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-console.log("🔥 TESTE LIVROS NOVO 🔥");
+console.log("TESTE LIVROS NOVO ");
 
 const form = document.getElementById("formLivro");
 const tabela = document.getElementById("tabelaLivros");
@@ -59,7 +65,9 @@ form.addEventListener("submit", async (e)=>{
 async function carregar(){
   tabela.innerHTML = "";
 
-  const dados = await getDocs(collection(db,"livros"));
+  const dados = await getDocs(
+  query(collection(db,"livros"), orderBy("nome"))
+);
 
   dados.forEach((l)=>{
     tabela.innerHTML += `
