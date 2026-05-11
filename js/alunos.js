@@ -7,8 +7,7 @@ import {
   doc,
   query,
   orderBy
-  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-}
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 console.log("VERSAO NOVA ALUNOS");
 
