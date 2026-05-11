@@ -53,8 +53,7 @@ form.addEventListener("submit", async (e)=>{
   `;
 }
 });
-  
-});
+
 
 // LISTAR
 async function carregar(){
