@@ -44,12 +44,15 @@ form.addEventListener("submit", async (e)=>{
     carregar();
 
   } catch (erro) {
-    console.error("ERRO AO SALVAR LIVRO:", erro);
-    document.getElementById("msgLivro").innerHTML = `
-  <div class="alert alert-danger">
-    Erro: ${erro.message}
-  </div>
-;
+  console.error("ERRO AO SALVAR LIVRO:", erro);
+
+  document.getElementById("msgLivro").innerHTML = `
+    <div class="alert alert-danger">
+      Erro: ${erro.message}
+    </div>
+  `;
+}
+});
   
 });
 
