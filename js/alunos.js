@@ -65,7 +65,10 @@ async function carregar(){
   tabela.innerHTML = "";
 
   const dados = await getDocs(
-  query(collection(db,"alunos"), orderBy("nome"))
+  query(
+    collection(db,"alunos"),
+    orderBy("nome")
+  )
 );
 
   dados.forEach((item)=>{
