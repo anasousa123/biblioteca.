@@ -31,7 +31,7 @@ form.addEventListener("submit", async (e)=>{
   try {
     const docRef = await addDoc(collection(db,"alunos"),{
       nome: nome.value,
-      turma: turma.value,
+      turma: Number(turma.value),
       nivel: nivel.value,
       email: email.value
     });
