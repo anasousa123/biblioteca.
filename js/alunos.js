@@ -1,4 +1,4 @@
-mas precisa organizar o nome tambem, precisa da turma e nome organizado segue o codigo :  
+ 
 import { db } from "./firebase.js";
 
 import {
