@@ -35,8 +35,8 @@ form.addEventListener("submit", async (e)=>{
       nivel: nivel.value,
       email: email.value
     });
-    
-    console.log(typeof Number(turma.value)); 
+
+    console.log("SALVO COM ID:", docRef.id);
 
     // MENSAGEM DE SUCESSO
     document.getElementById("msg").innerHTML = `
