@@ -32,11 +32,11 @@ form.addEventListener("submit", async (e)=>{
     const docRef = await addDoc(collection(db,"alunos"),{
       nome: nome.value,
       turma: Number(turma.value),
-      console.log(typeof Number(turma.value));
       nivel: nivel.value,
       email: email.value
     });
-
+    console.log(typeof Number(turma.value)); 
+    
     console.log("SALVO COM ID:", docRef.id);
 
     // MENSAGEM DE SUCESSO
