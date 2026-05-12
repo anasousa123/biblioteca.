@@ -1,4 +1,4 @@
-
+mas precisa organizar o nome tambem, precisa da turma e nome organizado segue o codigo :  
 import { db } from "./firebase.js";
 
 import {
@@ -31,7 +31,7 @@ form.addEventListener("submit", async (e)=>{
   try {
     const docRef = await addDoc(collection(db,"alunos"),{
       nome: nome.value,
-      turma: Number(turma.value),
+      turma: turma.value,
       nivel: nivel.value,
       email: email.value
     });
@@ -64,12 +64,8 @@ form.addEventListener("submit", async (e)=>{
 async function carregar(){
   tabela.innerHTML = "";
 
- const dados = await getDocs(
-  query(
-    collection(db,"alunos"),
-    orderBy("turma"),
-    orderBy("nome")
-  )
+  const dados = await getDocs(
+  query(collection(db,"alunos"), orderBy("nome"))
 );
 
   dados.forEach((item)=>{
