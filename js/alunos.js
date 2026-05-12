@@ -64,8 +64,12 @@ form.addEventListener("submit", async (e)=>{
 async function carregar(){
   tabela.innerHTML = "";
 
-  const dados = await getDocs(
-  query(collection(db,"alunos"), orderBy("nome"))
+ const dados = await getDocs(
+  query(
+    collection(db,"alunos"),
+    orderBy("turma"),
+    orderBy("nome")
+  )
 );
 
   dados.forEach((item)=>{
