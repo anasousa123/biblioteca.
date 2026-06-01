@@ -27,11 +27,13 @@ selLivro.innerHTML += `<option value="${l.id}">${l.data().nome}</option>`;
 document.getElementById("formEmprestimo").addEventListener("submit", async(e)=>{
 e.preventDefault();
 
-await addDoc(collection(db,"emprestimos"),{
-aluno: selAluno.options[selAluno.selectedIndex].text,
-livro: selLivro.options[selLivro.selectedIndex].text,
-status:"pendente"
-});
+await supabase
+.from("emprestimos")
+.insert([{
+  aluno: selAluno.options[selAluno.selectedIndex].text,
+  livro: selLivro.options[selLivro.selectedIndex].text,
+  status: "pendente"
+}]);
 
 carregar();
 });
@@ -44,7 +46,9 @@ let dev = document.getElementById("devolvidos");
 pend.innerHTML="";
 dev.innerHTML="";
 
-let dados = await getDocs(collection(db,"emprestimos"));
+const { data: dados } = await supabase
+.from("emprestimos")
+.select("*");
 
 dados.forEach(e=>{
 
@@ -74,9 +78,10 @@ dev.innerHTML += `
 }
 
 window.devolver = async(id)=>{
-await updateDoc(doc(db,"emprestimos",id),{
-status:"devolvido"
-});
+await supabase
+.from("emprestimos")
+.update({ status: "devolvido" })
+.eq("id", id);
 carregar();
 };
 
