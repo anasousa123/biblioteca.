@@ -74,10 +74,13 @@ async function carregar(){
 
 // EXCLUIR
 window.remover = async(id)=>{
- await supabase
-  .from("alunos")
-  .delete()
-  .eq("id", id);
+  await supabase
+    .from("alunos")
+    .delete()
+    .eq("id", id);
+
   carregar();
 };
+
+// CARREGAR AO ABRIR
 carregar();
