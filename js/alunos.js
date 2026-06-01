@@ -50,10 +50,18 @@ form.addEventListener("submit", async (e) => {
 async function carregar(){
   tabela.innerHTML = "";
 
- const { data: dados } = await supabase
+ const { data: dados, error } = await supabase
   .from("alunos")
   .select("*")
   .order("nome");
+
+console.log("DADOS:", dados);
+console.log("ERRO:", error);
+
+if (error) {
+  console.error(error);
+  return;
+}
 
   dados.forEach((item)=>{
     tabela.innerHTML += `
