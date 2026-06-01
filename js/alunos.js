@@ -38,15 +38,6 @@ form.addEventListener("submit", async (e) => {
     form.reset();
     carregar();
 
-  } catch (erro) {
-    document.getElementById("msg").innerHTML = `
-      <div class="alert alert-danger">
-        Erro: ${erro.message}
-      </div>
-    `;
-  }
-});
-
     // MENSAGEM DE ERRO
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-danger">
@@ -60,20 +51,18 @@ form.addEventListener("submit", async (e) => {
 async function carregar(){
   tabela.innerHTML = "";
 
-  const dados = await getDocs(
-  query(
-    collection(db,"alunos"),
-    orderBy("nome")
-  )
-);
+ const { data: dados } = await supabase
+  .from("alunos")
+  .select("*")
+  .order("nome");
 
   dados.forEach((item)=>{
     tabela.innerHTML += `
     <tr>
-      <td>${item.data().nome}</td>
-      <td>${item.data().turma}</td>
-      <td>${item.data().nivel}</td>
-      <td>${item.data().email}</td>
+      <td>${item.nome}</td>
+      <td>${item.turma}</td>
+      <td>${item.nivel}</td>
+      <td>${item.email}</td>
       <td>
         <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
           Excluir
@@ -86,9 +75,59 @@ async function carregar(){
 
 // EXCLUIR
 window.remover = async(id)=>{
-  await deleteDoc(doc(db,"alunos",id));
+ await supabase
+  .from("alunos")
+  .delete()
+  .eq("id", id);
   carregar();
 };
 
-// CARREGAR AO ABRIR
-carregar();
+async function carregar() {
+  tabela.innerHTML = "";
+
+  const { data: dados } = await supabase
+    .from("alunos")
+    .select("*")
+    .order("nome");
+
+  dados.forEach((item) => {
+    tabela.innerHTML += `
+    <tr>
+      <td>${item.nome}</td>
+      <td>${item.turma}</td>
+      <td>${item.nivel}</td>
+      <td>${item.email}</td>
+      <td>
+        <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    `;
+  });
+}
+
+async function carregar() {
+  tabela.innerHTML = "";
+
+  const { data: dados } = await supabase
+    .from("alunos")
+    .select("*")
+    .order("nome");
+
+  dados.forEach((item) => {
+    tabela.innerHTML += `
+    <tr>
+      <td>${item.nome}</td>
+      <td>${item.turma}</td>
+      <td>${item.nivel}</td>
+      <td>${item.email}</td>
+      <td>
+        <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    `;
+  });
+}
