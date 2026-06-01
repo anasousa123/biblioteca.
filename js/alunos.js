@@ -16,36 +16,36 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
-  const { error } = await supabase
-    .from("alunos")
-    .insert([
-      {
-        nome: nome.value,
-        turma: turma.value,
-        nivel: nivel.value,
-        email: email.value
-      }
-    ]);
+    const { error } = await supabase
+      .from("alunos")
+      .insert([
+        {
+          nome: nome.value,
+          turma: turma.value,
+          nivel: nivel.value,
+          email: email.value
+        }
+      ]);
 
-  if (error) throw error;
+    if (error) throw error;
 
-  document.getElementById("msg").innerHTML = `
-    <div class="alert alert-success">
-      Aluno cadastrado com sucesso!
-    </div>
-  `;
+    document.getElementById("msg").innerHTML = `
+      <div class="alert alert-success">
+        Aluno cadastrado com sucesso!
+      </div>
+    `;
 
-  form.reset();
-  carregar();
+    form.reset();
+    carregar();
 
-} catch (erro) {
-  document.getElementById("msg").innerHTML = `
-    <div class="alert alert-danger">
-      Erro: ${erro.message}
-    </div>
-  `;
-}
-
+  } catch (erro) {
+    document.getElementById("msg").innerHTML = `
+      <div class="alert alert-danger">
+        Erro: ${erro.message}
+      </div>
+    `;
+  }
+});
 // LISTAR
 async function carregar(){
   tabela.innerHTML = "";
