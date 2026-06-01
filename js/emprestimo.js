@@ -20,7 +20,7 @@ const { data: livros } = await supabase
   .select("*");
 selLivro.innerHTML = "<option>Livro</option>";
 livros.forEach(l=>{
-selLivro.innerHTML += `<option value="${l.id}">${l.data().nome}</option>`;
+selLivro.innerHTML += `<option value="${l.id}">${l.nome}</option>`;
 });
 }
 
@@ -52,11 +52,11 @@ const { data: dados } = await supabase
 
 dados.forEach(e=>{
 
-if(e.data().status === "pendente"){
+if(e.status === "pendente"){
 pend.innerHTML += `
 <tr>
-<td>${e.data().aluno}</td>
-<td>${e.data().livro}</td>
+<td>${e.aluno}</td>
+<td>${e.livro}</td>
 <td>
 <button onclick="devolver('${e.id}')" class="btn btn-success btn-sm">
 Devolver
@@ -67,8 +67,8 @@ Devolver
 }else{
 dev.innerHTML += `
 <tr>
-<td>${e.data().aluno}</td>
-<td>${e.data().livro}</td>
+<td>${e.aluno}</td>
+<td>${e.livro}</td>
 </tr>
 `;
 }
