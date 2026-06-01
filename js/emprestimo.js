@@ -1,7 +1,4 @@
 import { supabase } from "./supabase.js";
-import {
-collection, addDoc, getDocs, updateDoc, doc
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const selAluno = document.getElementById("aluno");
 const selLivro = document.getElementById("livro");
@@ -9,14 +6,18 @@ const selLivro = document.getElementById("livro");
 async function carregarSelects(){
 
 // alunos
-let alunos = await getDocs(collection(db,"alunos"));
+const { data: alunos } = await supabase
+  .from("alunos")
+  .select("*");
 selAluno.innerHTML = "<option>Aluno</option>";
 alunos.forEach(a=>{
-selAluno.innerHTML += `<option value="${a.id}">${a.data().nome}</option>`;
+selAluno.innerHTML += `<option value="${a.id}">${a.nome}</option>`;
 });
 
 // livros
-let livros = await getDocs(collection(db,"livros"));
+const { data: livros } = await supabase
+  .from("livros")
+  .select("*");
 selLivro.innerHTML = "<option>Livro</option>";
 livros.forEach(l=>{
 selLivro.innerHTML += `<option value="${l.id}">${l.data().nome}</option>`;
