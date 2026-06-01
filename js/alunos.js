@@ -1,13 +1,4 @@
-import { db } from "./firebase.js";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { supabase } from "./supabase.js";
 
 console.log("VERSAO NOVA ALUNOS");
 
@@ -21,22 +12,23 @@ const nivel = document.getElementById("nivel");
 const email = document.getElementById("email");
 
 // CADASTRAR
-form.addEventListener("submit", async (e)=>{
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  console.log("CLIQUE DETECTADO");
-
   try {
-    const docRef = await addDoc(collection(db,"alunos"),{
-      nome: nome.value,
-      turma: turma.value,
-      nivel: nivel.value,
-      email: email.value
-    });
+    const { error } = await supabase
+      .from("alunos")
+      .insert([
+        {
+          nome: nome.value,
+          turma: turma.value,
+          nivel: nivel.value,
+          email: email.value
+        }
+      ]);
 
-    console.log("SALVO COM ID:", docRef.id);
+    if (error) throw error;
 
-    // MENSAGEM DE SUCESSO
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-success">
         Aluno cadastrado com sucesso!
@@ -47,7 +39,13 @@ form.addEventListener("submit", async (e)=>{
     carregar();
 
   } catch (erro) {
-    console.error("ERRO REAL:", erro);
+    document.getElementById("msg").innerHTML = `
+      <div class="alert alert-danger">
+        Erro: ${erro.message}
+      </div>
+    `;
+  }
+});
 
     // MENSAGEM DE ERRO
     document.getElementById("msg").innerHTML = `
