@@ -16,36 +16,35 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
-    const { error } = await supabase
-      .from("alunos")
-      .insert([
-        {
-          nome: nome.value,
-          turma: turma.value,
-          nivel: nivel.value,
-          email: email.value
-        }
-      ]);
+  const { error } = await supabase
+    .from("alunos")
+    .insert([
+      {
+        nome: nome.value,
+        turma: turma.value,
+        nivel: nivel.value,
+        email: email.value
+      }
+    ]);
 
-    if (error) throw error;
+  if (error) throw error;
 
-    document.getElementById("msg").innerHTML = `
-      <div class="alert alert-success">
-        Aluno cadastrado com sucesso!
-      </div>
-    `;
+  document.getElementById("msg").innerHTML = `
+    <div class="alert alert-success">
+      Aluno cadastrado com sucesso!
+    </div>
+  `;
 
-    form.reset();
-    carregar();
+  form.reset();
+  carregar();
 
-    // MENSAGEM DE ERRO
-    document.getElementById("msg").innerHTML = `
-      <div class="alert alert-danger">
-        Erro: ${erro.message}
-      </div>
-    `;
-  }
-});
+} catch (erro) {
+  document.getElementById("msg").innerHTML = `
+    <div class="alert alert-danger">
+      Erro: ${erro.message}
+    </div>
+  `;
+}
 
 // LISTAR
 async function carregar(){
@@ -81,53 +80,4 @@ window.remover = async(id)=>{
   .eq("id", id);
   carregar();
 };
-
-async function carregar() {
-  tabela.innerHTML = "";
-
-  const { data: dados } = await supabase
-    .from("alunos")
-    .select("*")
-    .order("nome");
-
-  dados.forEach((item) => {
-    tabela.innerHTML += `
-    <tr>
-      <td>${item.nome}</td>
-      <td>${item.turma}</td>
-      <td>${item.nivel}</td>
-      <td>${item.email}</td>
-      <td>
-        <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
-          Excluir
-        </button>
-      </td>
-    </tr>
-    `;
-  });
-}
-
-async function carregar() {
-  tabela.innerHTML = "";
-
-  const { data: dados } = await supabase
-    .from("alunos")
-    .select("*")
-    .order("nome");
-
-  dados.forEach((item) => {
-    tabela.innerHTML += `
-    <tr>
-      <td>${item.nome}</td>
-      <td>${item.turma}</td>
-      <td>${item.nivel}</td>
-      <td>${item.email}</td>
-      <td>
-        <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
-          Excluir
-        </button>
-      </td>
-    </tr>
-    `;
-  });
-}
+carregar();
