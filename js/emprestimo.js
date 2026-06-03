@@ -3,86 +3,121 @@ import { supabase } from "./supabase.js";
 const selAluno = document.getElementById("aluno");
 const selLivro = document.getElementById("livro");
 
-async function carregarSelects(){
+const dataEmprestimo = document.getElementById("dataEmprestimo");
+const dataDevolucao = document.getElementById("dataDevolucao");
 
-// alunos
-const { data: alunos } = await supabase
-  .from("alunos")
-  .select("*");
-selAluno.innerHTML = "<option>Aluno</option>";
-alunos.forEach(a=>{
-selAluno.innerHTML += `<option value="${a.id}">${a.nome}</option>`;
-});
+async function carregarSelects() {
 
-// livros
-const { data: livros } = await supabase
-  .from("livros")
-  .select("*");
-selLivro.innerHTML = "<option>Livro</option>";
-livros.forEach(l=>{
-selLivro.innerHTML += `<option value="${l.id}">${l.nome}</option>`;
-});
+  // alunos
+  const { data: alunos } = await supabase
+    .from("alunos")
+    .select("*");
+
+  selAluno.innerHTML = "<option>Aluno</option>";
+
+  alunos.forEach(a => {
+    selAluno.innerHTML += `
+      <option value="${a.id}">
+        ${a.nome}
+      </option>
+    `;
+  });
+
+  // livros
+  const { data: livros } = await supabase
+    .from("livros")
+    .select("*");
+
+  selLivro.innerHTML = "<option>Livro</option>";
+
+  livros.forEach(l => {
+    selLivro.innerHTML += `
+      <option value="${l.id}">
+        ${l.nome}
+      </option>
+    `;
+  });
 }
 
-document.getElementById("formEmprestimo").addEventListener("submit", async(e)=>{
-e.preventDefault();
+document.getElementById("formEmprestimo").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-await supabase
-.from("emprestimos")
-.insert([{
-  aluno: selAluno.options[selAluno.selectedIndex].text,
-  livro: selLivro.options[selLivro.selectedIndex].text,
-  status: "pendente"
-}]);
+  const { error } = await supabase
+    .from("emprestimos")
+    .insert([
+      {
+        aluno: selAluno.options[selAluno.selectedIndex].text,
+        livro: selLivro.options[selLivro.selectedIndex].text,
+        data_emprestimo: dataEmprestimo.value,
+        data_devolucao: dataDevolucao.value || null
+      }
+    ]);
 
-carregar();
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  carregar();
 });
 
-async function carregar(){
+async function carregar() {
 
-let pend = document.getElementById("pendentes");
-let dev = document.getElementById("devolvidos");
+  let pend = document.getElementById("pendentes");
+  let dev = document.getElementById("devolvidos");
 
-pend.innerHTML="";
-dev.innerHTML="";
+  pend.innerHTML = "";
+  dev.innerHTML = "";
 
-const { data: dados } = await supabase
-.from("emprestimos")
-.select("*");
+  const { data: dados, error } = await supabase
+    .from("emprestimos")
+    .select("*");
 
-dados.forEach(e=>{
+  if (error) {
+    console.error(error);
+    return;
+  }
 
-if(e.status === "pendente"){
-pend.innerHTML += `
-<tr>
-<td>${e.aluno}</td>
-<td>${e.livro}</td>
-<td>
-<button onclick="devolver('${e.id}')" class="btn btn-success btn-sm">
-Devolver
-</button>
-</td>
-</tr>
-`;
-}else{
-dev.innerHTML += `
-<tr>
-<td>${e.aluno}</td>
-<td>${e.livro}</td>
-</tr>
-`;
+  dados.forEach(e => {
+
+    if (e.data_devolucao === null) {
+
+      pend.innerHTML += `
+      <tr>
+        <td>${e.aluno}</td>
+        <td>${e.livro}</td>
+        <td>
+          <button onclick="devolver('${e.id}')" class="btn btn-success btn-sm">
+            Devolver
+          </button>
+        </td>
+      </tr>
+      `;
+
+    } else {
+
+      dev.innerHTML += `
+      <tr>
+        <td>${e.aluno}</td>
+        <td>${e.livro}</td>
+      </tr>
+      `;
+    }
+
+  });
+
 }
 
-});
+window.devolver = async (id) => {
 
-}
+  await supabase
+    .from("emprestimos")
+    .update({
+      data_devolucao: new Date().toISOString().split("T")[0]
+    })
+    .eq("id", id);
 
-window.devolver = async(id)=>{
-await supabase
-.from("emprestimos")
-.update({ status: "devolvido" })
-.eq("id", id);
-carregar();
+  carregar();
 };
 
 carregarSelects();
