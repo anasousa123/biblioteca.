@@ -68,12 +68,11 @@ async function carregar() {
   dados.forEach((l) => {
     tabela.innerHTML += `
     <tr>
-      <td>${l.codigo}</td>
-      <td>${l.nome}</td>
-      <td>${l.autor}</td>
-      <td>${l.genero}</td>
-      <td>${l.exemplares}</td>
-      <td>
+     <td>${l.id}</td>
+<td>${l.nome}</td>
+<td>${l.autor}</td>
+<td>${l.genero}</td>
+<td>${l.exemplares}</td>
         <button onclick="remover('${l.id}')" class="btn btn-danger btn-sm">
           Excluir
         </button>
