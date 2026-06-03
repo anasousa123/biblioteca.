@@ -69,10 +69,10 @@ async function carregar() {
     tabela.innerHTML += `
     <tr>
      <td>${l.id}</td>
-<td>${l.nome}</td>
-<td>${l.autor}</td>
-<td>${l.genero}</td>
-<td>${l.exemplares}</td>
+     <td>${l.nome}</td>
+     <td>${l.autor}</td>
+     <td>${l.genero}</td>
+     <td>${l.exemplares}</td>
         <button onclick="remover('${l.id}')" class="btn btn-danger btn-sm">
           Excluir
         </button>
@@ -84,13 +84,16 @@ async function carregar() {
 
 // EXCLUIR
 window.remover = async (id) => {
-  await supabase
-    .from("livros")
-    .delete()
-    .eq("id", id);
-
-  carregar();
-};
+ await supabase
+  .from("livros")
+  .insert([
+    {
+      nome: nomeLivro.value,
+      autor: autor.value,
+      genero: genero.value,
+      exemplares: exemplares.value
+    }
+  ]);
 
 // CARREGAR AO ABRIR
 carregar();
