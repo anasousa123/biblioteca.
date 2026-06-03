@@ -75,6 +75,8 @@ async function carregar() {
     .from("emprestimos")
     .select("*");
 
+  console.log("DADOS:", dados);
+
   if (error) {
     console.error(error);
     return;
@@ -82,7 +84,7 @@ async function carregar() {
 
   dados.forEach(e => {
 
-    if (e.data_devolucao === null) {
+    if (!e.data_devolucao) {
 
       pend.innerHTML += `
       <tr>
