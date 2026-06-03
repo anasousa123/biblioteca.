@@ -3,8 +3,8 @@ import { supabase } from "./supabase.js";
 const selAluno = document.getElementById("aluno");
 const selLivro = document.getElementById("livro");
 
-const dataEmprestimo = document.getElementById("dataEmprestimo");
-const dataDevolucao = document.getElementById("dataDevolucao");
+const dataEmprestimo = document.getElementById("dataEmp");
+const dataDevolucao = document.getElementById("dataDev");
 
 async function carregarSelects() {
 
