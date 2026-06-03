@@ -84,16 +84,13 @@ async function carregar() {
 
 // EXCLUIR
 window.remover = async (id) => {
- await supabase
-  .from("livros")
-  .insert([
-    {
-      nome: nomeLivro.value,
-      autor: autor.value,
-      genero: genero.value,
-      exemplares: exemplares.value
-    }
-  ]);
+  await supabase
+    .from("livros")
+    .delete()
+    .eq("id", id);
+
+  carregar();
+};
 
 // CARREGAR AO ABRIR
 carregar();
