@@ -21,7 +21,6 @@ form.addEventListener("submit", async (e) => {
       .from("livros")
       .insert([
         {
-          codigo: idLivro.value,
           nome: nomeLivro.value,
           autor: autor.value,
           genero: genero.value,
@@ -73,11 +72,12 @@ async function carregar() {
      <td>${l.autor}</td>
      <td>${l.genero}</td>
      <td>${l.exemplares}</td>
-        <button onclick="remover('${l.id}')" class="btn btn-danger btn-sm">
-          Excluir
-        </button>
-      </td>
-    </tr>
+     <td>
+     <button onclick="remover('${l.id}')" class="btn btn-danger btn-sm">
+     Excluir
+     </button>
+     </td>
+     </tr>
     `;
   });
 }
