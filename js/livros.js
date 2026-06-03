@@ -1,55 +1,46 @@
-import { db } from "./firebase.js";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { supabase } from "./supabase.js";
 
-console.log("TESTE LIVROS NOVO ");
+console.log("TESTE LIVROS NOVO");
 
 const form = document.getElementById("formLivro");
 const tabela = document.getElementById("tabelaLivros");
 
-// PEGAR CAMPOS
+// CAMPOS
 const idLivro = document.getElementById("idLivro");
 const nomeLivro = document.getElementById("nomeLivro");
 const autor = document.getElementById("autor");
 const genero = document.getElementById("genero");
 const exemplares = document.getElementById("exemplares");
 
-console.log("FORM LIVROS:", form);
-
 // CADASTRAR
-form.addEventListener("submit", async (e)=>{
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  console.log("CLIQUE LIVRO DETECTADO");
-
   try {
-    const docRef = await addDoc(collection(db,"livros"),{
-      id: idLivro.value,
-      nome: nomeLivro.value,
-      autor: autor.value,
-      genero: genero.value,
-      exemplares: exemplares.value
-    });
+    const { error } = await supabase
+      .from("livros")
+      .insert([
+        {
+          codigo: idLivro.value,
+          nome: nomeLivro.value,
+          autor: autor.value,
+          genero: genero.value,
+          exemplares: exemplares.value
+        }
+      ]);
 
-    console.log("LIVRO SALVO:", docRef.id);
+    if (error) throw error;
 
     document.getElementById("msgLivro").innerHTML = `
-  <div class="alert alert-success">
-    Livro cadastrado com sucesso!
-  </div>
-`;
+      <div class="alert alert-success">
+        Livro cadastrado com sucesso!
+      </div>
+    `;
 
     form.reset();
     carregar();
 
-    } catch (erro) {
+  } catch (erro) {
     console.error("ERRO AO SALVAR LIVRO:", erro);
 
     document.getElementById("msgLivro").innerHTML = `
@@ -60,23 +51,28 @@ form.addEventListener("submit", async (e)=>{
   }
 });
 
-
 // LISTAR
-async function carregar(){
+async function carregar() {
   tabela.innerHTML = "";
 
-  const dados = await getDocs(
-  query(collection(db,"livros"), orderBy("nome"))
-);
+  const { data: dados, error } = await supabase
+    .from("livros")
+    .select("*")
+    .order("nome");
 
-  dados.forEach((l)=>{
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  dados.forEach((l) => {
     tabela.innerHTML += `
     <tr>
-      <td>${l.data().id}</td>
-      <td>${l.data().nome}</td>
-      <td>${l.data().autor}</td>
-      <td>${l.data().genero}</td>
-      <td>${l.data().exemplares}</td>
+      <td>${l.codigo}</td>
+      <td>${l.nome}</td>
+      <td>${l.autor}</td>
+      <td>${l.genero}</td>
+      <td>${l.exemplares}</td>
       <td>
         <button onclick="remover('${l.id}')" class="btn btn-danger btn-sm">
           Excluir
@@ -88,8 +84,12 @@ async function carregar(){
 }
 
 // EXCLUIR
-window.remover = async(id)=>{
-  await deleteDoc(doc(db,"livros",id));
+window.remover = async (id) => {
+  await supabase
+    .from("livros")
+    .delete()
+    .eq("id", id);
+
   carregar();
 };
 
