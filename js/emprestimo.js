@@ -49,7 +49,7 @@ document.getElementById("formEmprestimo").addEventListener("submit", async (e) =
         aluno: selAluno.options[selAluno.selectedIndex].text,
         livro: selLivro.options[selLivro.selectedIndex].text,
         data_emprestimo: dataEmprestimo.value,
-        data_devolucao: dataDevolucao.value || null
+        data_devolucao: null
       }
     ]);
 
@@ -57,6 +57,8 @@ document.getElementById("formEmprestimo").addEventListener("submit", async (e) =
     console.error(error);
     return;
   }
+
+  document.getElementById("formEmprestimo").reset();
 
   carregar();
 });
