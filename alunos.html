@@ -35,25 +35,25 @@
 </div>
 
 <div class="col-md-6">
-<input type="text" id="turma" class="form-control" placeholder="Turma" required>
+<select id="turma" class="form-select" required>
+<option value="">Selecione a turma</option>
+<option value="601">601</option>
+<option value="602">602</option>
+<option value="701">701</option>
+<option value="702">702</option>
+<option value="801">801</option>
+<option value="802">802</option>
+<option value="901">901</option>
+<option value="902">902</option>
+</select>
 </div>
 
 <div class="col-md-6">
-  <select id="turma" class="form-select" required>
-    <option value="">Selecione a turma</option>
-    <option value="601">601</option>
-    <option value="602">602</option>
-    <option value="701">701</option>
-    <option value="702">702</option>
-    <option value="801">801</option>
-    <option value="802">802</option>
-    <option value="901">901</option>
-    <option value="902">902</option>
-  </select>
-</div>
-
-<div class="col-md-6">
-<input type="date" id="data" class="form-control">
+<select id="nivel" class="form-select" required>
+<option value="">Selecione o nível</option>
+<option value="Fundamental">Fundamental</option>
+<option value="Médio">Médio</option>
+</select>
 </div>
 
 <div class="col-md-6">
@@ -85,7 +85,7 @@
 
 </main>
 
-<script type="module" src="./js/alunos.js"></script>
+<script src="./js/alunos.js"></script>
 
 </body>
-</html>>
+</html>

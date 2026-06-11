@@ -1,19 +1,20 @@
-import { supabase } from "./supabase.js";
-
 const selAluno = document.getElementById("aluno");
 const selLivro = document.getElementById("livro");
 
 const dataEmprestimo = document.getElementById("dataEmp");
 const dataDevolucao = document.getElementById("dataDev");
 
-async function carregarSelects() {
+// CARREGAR ALUNOS E LIVROS
+function carregarSelects() {
 
-  // alunos
-  const { data: alunos } = await supabase
-    .from("alunos")
-    .select("*");
+  let alunos =
+    JSON.parse(localStorage.getItem("alunos")) || [];
+
+  let livros =
+    JSON.parse(localStorage.getItem("livros")) || [];
 
   selAluno.innerHTML = "<option>Aluno</option>";
+  selLivro.innerHTML = "<option>Livro</option>";
 
   alunos.forEach(a => {
     selAluno.innerHTML += `
@@ -22,13 +23,6 @@ async function carregarSelects() {
       </option>
     `;
   });
-
-  // livros
-  const { data: livros } = await supabase
-    .from("livros")
-    .select("*");
-
-  selLivro.innerHTML = "<option>Livro</option>";
 
   livros.forEach(l => {
     selLivro.innerHTML += `
@@ -39,31 +33,34 @@ async function carregarSelects() {
   });
 }
 
-document.getElementById("formEmprestimo").addEventListener("submit", async (e) => {
+// CADASTRAR EMPRÉSTIMO
+document.getElementById("formEmprestimo").addEventListener("submit", (e) => {
+
   e.preventDefault();
 
-  const { error } = await supabase
-    .from("emprestimos")
-    .insert([
-      {
-        aluno: selAluno.options[selAluno.selectedIndex].text,
-        livro: selLivro.options[selLivro.selectedIndex].text,
-        data_emprestimo: dataEmprestimo.value,
-        data_devolucao: null
-      }
-    ]);
+  let emprestimos =
+    JSON.parse(localStorage.getItem("emprestimos")) || [];
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+  emprestimos.push({
+    id: Date.now(),
+    aluno: selAluno.options[selAluno.selectedIndex].text,
+    livro: selLivro.options[selLivro.selectedIndex].text,
+    data_emprestimo: dataEmprestimo.value,
+    data_devolucao: null
+  });
+
+  localStorage.setItem(
+    "emprestimos",
+    JSON.stringify(emprestimos)
+  );
 
   document.getElementById("formEmprestimo").reset();
 
   carregar();
 });
 
-async function carregar() {
+// LISTAR
+function carregar() {
 
   let pend = document.getElementById("pendentes");
   let dev = document.getElementById("devolvidos");
@@ -71,16 +68,8 @@ async function carregar() {
   pend.innerHTML = "";
   dev.innerHTML = "";
 
-  const { data: dados, error } = await supabase
-    .from("emprestimos")
-    .select("*");
-
-  console.log("DADOS:", dados);
-
-  if (error) {
-    console.error(error);
-    return;
-  }
+  let dados =
+    JSON.parse(localStorage.getItem("emprestimos")) || [];
 
   dados.forEach(e => {
 
@@ -90,8 +79,10 @@ async function carregar() {
       <tr>
         <td>${e.aluno}</td>
         <td>${e.livro}</td>
+        <td>${e.data_emprestimo}</td>
         <td>
-          <button onclick="devolver('${e.id}')" class="btn btn-success btn-sm">
+          <button onclick="devolver(${e.id})"
+            class="btn btn-success btn-sm">
             Devolver
           </button>
         </td>
@@ -104,6 +95,8 @@ async function carregar() {
       <tr>
         <td>${e.aluno}</td>
         <td>${e.livro}</td>
+        <td>${e.data_emprestimo}</td>
+        <td>${e.data_devolucao}</td>
       </tr>
       `;
     }
@@ -112,14 +105,26 @@ async function carregar() {
 
 }
 
-window.devolver = async (id) => {
+// DEVOLVER
+window.devolver = (id) => {
 
-  await supabase
-    .from("emprestimos")
-    .update({
-      data_devolucao: new Date().toISOString().split("T")[0]
-    })
-    .eq("id", id);
+  let emprestimos =
+    JSON.parse(localStorage.getItem("emprestimos")) || [];
+
+  emprestimos = emprestimos.map(e => {
+
+    if (e.id === id) {
+      e.data_devolucao =
+        new Date().toISOString().split("T")[0];
+    }
+
+    return e;
+  });
+
+  localStorage.setItem(
+    "emprestimos",
+    JSON.stringify(emprestimos)
+  );
 
   carregar();
 };

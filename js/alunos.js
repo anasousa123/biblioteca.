@@ -1,5 +1,3 @@
-import { supabase } from "./supabase.js";
-
 console.log("VERSAO NOVA ALUNOS");
 
 const form = document.getElementById("formAluno");
@@ -12,22 +10,26 @@ const nivel = document.getElementById("nivel");
 const email = document.getElementById("email");
 
 // CADASTRAR
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   try {
-    const { error } = await supabase
-      .from("alunos")
-      .insert([
-        {
-          nome: nome.value,
-          turma: turma.value,
-          nivel: nivel.value,
-          email: email.value
-        }
-      ]);
 
-    if (error) throw error;
+    let alunos =
+      JSON.parse(localStorage.getItem("alunos")) || [];
+
+    alunos.push({
+      id: Date.now(),
+      nome: nome.value,
+      turma: turma.value,
+      nivel: nivel.value,
+      email: email.value
+    });
+
+    localStorage.setItem(
+      "alunos",
+      JSON.stringify(alunos)
+    );
 
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-success">
@@ -39,6 +41,7 @@ form.addEventListener("submit", async (e) => {
     carregar();
 
   } catch (erro) {
+
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-danger">
         Erro: ${erro.message}
@@ -46,46 +49,53 @@ form.addEventListener("submit", async (e) => {
     `;
   }
 });
+
 // LISTAR
-async function carregar(){
+function carregar() {
+
   tabela.innerHTML = "";
 
- const { data: dados, error } = await supabase
-  .from("alunos")
-  .select("*")
-  .order("nome");
+  let dados =
+    JSON.parse(localStorage.getItem("alunos")) || [];
 
-console.log("DADOS:", dados);
-console.log("ERRO:", error);
+  dados.sort((a, b) =>
+    a.nome.localeCompare(b.nome)
+  );
 
-if (error) {
-  console.error(error);
-  return;
-}
+  dados.forEach((item) => {
 
-  dados.forEach((item)=>{
     tabela.innerHTML += `
-    <tr>
-      <td>${item.nome}</td>
-      <td>${item.turma}</td>
-      <td>${item.nivel}</td>
-      <td>${item.email}</td>
-      <td>
-        <button onclick="remover('${item.id}')" class="btn btn-danger btn-sm">
-          Excluir
-        </button>
-      </td>
-    </tr>
+      <tr>
+        <td>${item.nome}</td>
+        <td>${item.turma}</td>
+        <td>${item.nivel}</td>
+        <td>${item.email}</td>
+        <td>
+          <button
+            onclick="remover(${item.id})"
+            class="btn btn-danger btn-sm">
+            Excluir
+          </button>
+        </td>
+      </tr>
     `;
   });
 }
 
 // EXCLUIR
-window.remover = async(id)=>{
-  await supabase
-    .from("alunos")
-    .delete()
-    .eq("id", id);
+window.remover = (id) => {
+
+  let alunos =
+    JSON.parse(localStorage.getItem("alunos")) || [];
+
+  alunos = alunos.filter(
+    aluno => aluno.id !== id
+  );
+
+  localStorage.setItem(
+    "alunos",
+    JSON.stringify(alunos)
+  );
 
   carregar();
 };
