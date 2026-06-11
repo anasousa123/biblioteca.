@@ -56,13 +56,24 @@ function carregar() {
   tabela.innerHTML = "";
 
   let dados =
-    JSON.parse(localStorage.getItem("alunos")) || [];
+  JSON.parse(localStorage.getItem("alunos")) || [];
 
-  dados.sort((a, b) =>
-    a.nome.localeCompare(b.nome)
-  );
+dados.sort((a, b) => {
 
-  dados.forEach((item) => {
+    // Ordena pela turma (601, 602, 701...)
+    const comparaTurma =
+      Number(a.turma) - Number(b.turma);
+
+    // Se as turmas forem diferentes
+    if (comparaTurma !== 0) {
+        return comparaTurma;
+    }
+
+    // Se forem da mesma turma, ordena pelo nome
+    return a.nome.localeCompare(b.nome, "pt-BR");
+});
+
+dados.forEach((item) => {
 
     tabela.innerHTML += `
       <tr>
