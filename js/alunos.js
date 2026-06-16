@@ -1,4 +1,14 @@
-console.log("VERSAO NOVA ALUNOS");
+console.log("VERSAO FIREBASE ALUNOS");
+
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const form = document.getElementById("formAluno");
 const tabela = document.getElementById("tabela");
@@ -10,26 +20,17 @@ const nivel = document.getElementById("nivel");
 const email = document.getElementById("email");
 
 // CADASTRAR
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
 
-    let alunos =
-      JSON.parse(localStorage.getItem("alunos")) || [];
-
-    alunos.push({
-      id: Date.now(),
+    await addDoc(collection(db, "alunos"), {
       nome: nome.value,
       turma: turma.value,
       nivel: nivel.value,
       email: email.value
     });
-
-    localStorage.setItem(
-      "alunos",
-      JSON.stringify(alunos)
-    );
 
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-success">
@@ -38,6 +39,7 @@ form.addEventListener("submit", (e) => {
     `;
 
     form.reset();
+
     carregar();
 
   } catch (erro) {
@@ -51,29 +53,41 @@ form.addEventListener("submit", (e) => {
 });
 
 // LISTAR
-function carregar() {
+async function carregar() {
 
   tabela.innerHTML = "";
 
-  let dados =
-  JSON.parse(localStorage.getItem("alunos")) || [];
+  const snapshot = await getDocs(
+    collection(db, "alunos")
+  );
 
-dados.sort((a, b) => {
+  let dados = [];
 
-    // Ordena pela turma (601, 602, 701...)
+  snapshot.forEach((registro) => {
+
+    dados.push({
+      id: registro.id,
+      ...registro.data()
+    });
+
+  });
+
+  dados.sort((a, b) => {
+
     const comparaTurma =
       Number(a.turma) - Number(b.turma);
 
-    // Se as turmas forem diferentes
     if (comparaTurma !== 0) {
-        return comparaTurma;
+      return comparaTurma;
     }
 
-    // Se forem da mesma turma, ordena pelo nome
-    return a.nome.localeCompare(b.nome, "pt-BR");
-});
+    return a.nome.localeCompare(
+      b.nome,
+      "pt-BR"
+    );
+  });
 
-dados.forEach((item) => {
+  dados.forEach((item) => {
 
     tabela.innerHTML += `
       <tr>
@@ -83,7 +97,7 @@ dados.forEach((item) => {
         <td>${item.email}</td>
         <td>
           <button
-            onclick="remover(${item.id})"
+            onclick="remover('${item.id}')"
             class="btn btn-danger btn-sm">
             Excluir
           </button>
@@ -94,18 +108,10 @@ dados.forEach((item) => {
 }
 
 // EXCLUIR
-window.remover = (id) => {
+window.remover = async (id) => {
 
-  let alunos =
-    JSON.parse(localStorage.getItem("alunos")) || [];
-
-  alunos = alunos.filter(
-    aluno => aluno.id !== id
-  );
-
-  localStorage.setItem(
-    "alunos",
-    JSON.stringify(alunos)
+  await deleteDoc(
+    doc(db, "alunos", id)
   );
 
   carregar();

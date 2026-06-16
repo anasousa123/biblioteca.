@@ -1,3 +1,13 @@
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 const selAluno = document.getElementById("aluno");
 const selLivro = document.getElementById("livro");
 
@@ -5,125 +15,141 @@ const dataEmprestimo = document.getElementById("dataEmp");
 const dataDevolucao = document.getElementById("dataDev");
 
 // CARREGAR ALUNOS E LIVROS
-function carregarSelects() {
-
-  let alunos =
-    JSON.parse(localStorage.getItem("alunos")) || [];
-
-  let livros =
-    JSON.parse(localStorage.getItem("livros")) || [];
+async function carregarSelects() {
 
   selAluno.innerHTML = "<option>Aluno</option>";
   selLivro.innerHTML = "<option>Livro</option>";
 
-  alunos.forEach(a => {
+  const alunosSnap = await getDocs(
+    collection(db, "alunos")
+  );
+
+  alunosSnap.forEach((docItem) => {
+
+    const aluno = docItem.data();
+
     selAluno.innerHTML += `
-      <option value="${a.id}">
-        ${a.nome}
+      <option value="${docItem.id}">
+        ${aluno.nome}
       </option>
     `;
   });
 
-  livros.forEach(l => {
+  const livrosSnap = await getDocs(
+    collection(db, "livros")
+  );
+
+  livrosSnap.forEach((docItem) => {
+
+    const livro = docItem.data();
+
     selLivro.innerHTML += `
-      <option value="${l.id}">
-        ${l.nome}
+      <option value="${docItem.id}">
+        ${livro.nome}
       </option>
     `;
   });
 }
 
 // CADASTRAR EMPRÉSTIMO
-document.getElementById("formEmprestimo").addEventListener("submit", (e) => {
+document
+  .getElementById("formEmprestimo")
+  .addEventListener("submit", async (e) => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  let emprestimos =
-    JSON.parse(localStorage.getItem("emprestimos")) || [];
+    await addDoc(
+      collection(db, "emprestimos"),
+      {
+        aluno:
+          selAluno.options[
+            selAluno.selectedIndex
+          ].text,
 
-  emprestimos.push({
-    id: Date.now(),
-    aluno: selAluno.options[selAluno.selectedIndex].text,
-    livro: selLivro.options[selLivro.selectedIndex].text,
-    data_emprestimo: dataEmprestimo.value,
-    data_devolucao: null
+        livro:
+          selLivro.options[
+            selLivro.selectedIndex
+          ].text,
+
+        data_emprestimo:
+          dataEmprestimo.value,
+
+        data_devolucao: null
+      }
+    );
+
+    document
+      .getElementById("formEmprestimo")
+      .reset();
+
+    carregar();
   });
 
-  localStorage.setItem(
-    "emprestimos",
-    JSON.stringify(emprestimos)
-  );
-
-  document.getElementById("formEmprestimo").reset();
-
-  carregar();
-});
-
 // LISTAR
-function carregar() {
+async function carregar() {
 
-  let pend = document.getElementById("pendentes");
-  let dev = document.getElementById("devolvidos");
+  let pend =
+    document.getElementById("pendentes");
+
+  let dev =
+    document.getElementById("devolvidos");
 
   pend.innerHTML = "";
   dev.innerHTML = "";
 
-  let dados =
-    JSON.parse(localStorage.getItem("emprestimos")) || [];
+  const snapshot = await getDocs(
+    collection(db, "emprestimos")
+  );
 
-  dados.forEach(e => {
+  snapshot.forEach((registro) => {
+
+    const e = {
+      id: registro.id,
+      ...registro.data()
+    };
 
     if (!e.data_devolucao) {
 
       pend.innerHTML += `
-      <tr>
-        <td>${e.aluno}</td>
-        <td>${e.livro}</td>
-        <td>${e.data_emprestimo}</td>
-        <td>
-          <button onclick="devolver(${e.id})"
-            class="btn btn-success btn-sm">
-            Devolver
-          </button>
-        </td>
-      </tr>
+        <tr>
+          <td>${e.aluno}</td>
+          <td>${e.livro}</td>
+          <td>${e.data_emprestimo}</td>
+          <td>
+            <button
+              onclick="devolver('${e.id}')"
+              class="btn btn-success btn-sm">
+              Devolver
+            </button>
+          </td>
+        </tr>
       `;
 
     } else {
 
       dev.innerHTML += `
-      <tr>
-        <td>${e.aluno}</td>
-        <td>${e.livro}</td>
-        <td>${e.data_emprestimo}</td>
-        <td>${e.data_devolucao}</td>
-      </tr>
+        <tr>
+          <td>${e.aluno}</td>
+          <td>${e.livro}</td>
+          <td>${e.data_emprestimo}</td>
+          <td>${e.data_devolucao}</td>
+        </tr>
       `;
     }
-
   });
-
 }
 
 // DEVOLVER
-window.devolver = (id) => {
+window.devolver = async (id) => {
 
-  let emprestimos =
-    JSON.parse(localStorage.getItem("emprestimos")) || [];
-
-  emprestimos = emprestimos.map(e => {
-
-    if (e.id === id) {
-      e.data_devolucao =
-        new Date().toISOString().split("T")[0];
+  await updateDoc(
+    doc(db, "emprestimos", id),
+    {
+      data_devolucao:
+        new Date()
+          .toISOString()
+          .split("T")[0]
     }
-
-    return e;
-  });
-
-  localStorage.setItem(
-    "emprestimos",
-    JSON.stringify(emprestimos)
   );
 
   carregar();
