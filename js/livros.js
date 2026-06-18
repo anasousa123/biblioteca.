@@ -1,3 +1,5 @@
+form.addEventListener("submit", async (e) => {
+
 console.log("TESTE LIVROS FIREBASE");
 
 import { db } from "./firebase.js";
