@@ -8,7 +8,7 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-alert("LIVROS.JS CARREGOU");a
+alert("LIVROS.JS CARREGOU");
 console.log("TESTE LIVROS FIREBASE");
 
 const form = document.getElementById("formLivro");
