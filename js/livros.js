@@ -1,6 +1,5 @@
 import { db } from "./firebase.js";
 
-alert("LIVROS.JS CARREGOU");
 import {
   collection,
   addDoc,
@@ -8,6 +7,8 @@ import {
   deleteDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+alert("JS CARREGOU");
+
 
 console.log("TESTE LIVROS FIREBASE");
 
