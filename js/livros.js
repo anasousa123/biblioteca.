@@ -1,9 +1,3 @@
-console.log("TESTE LIVROS FIREBASE");
-
-const form = document.getElementById("formLivro");
-
-console.log("FORM:", form);
-
 import { db } from "./firebase.js";
 
 import {
@@ -14,8 +8,12 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+console.log("TESTE LIVROS FIREBASE");
+
 const form = document.getElementById("formLivro");
 const tabela = document.getElementById("tabelaLivros");
+
+console.log("FORM:", form);
 
 // CAMPOS
 const nomeLivro = document.getElementById("nomeLivro");
@@ -60,14 +58,15 @@ form.addEventListener("submit", async (e) => {
   } catch (erro) {
 
     console.error("ERRO FIREBASE:", erro);
-alert("Erro: " + erro.message);
+
+    alert("Erro: " + erro.message);
+
     document.getElementById("msgLivro").innerHTML = `
       <div class="alert alert-danger">
         Erro: ${erro.message}
       </div>
     `;
   }
-
 });
 
 // LISTAR
@@ -75,45 +74,61 @@ async function carregar() {
 
   tabela.innerHTML = "";
 
-  const snapshot = await getDocs(
-    collection(db, "livros")
-  );
+  try {
 
-  snapshot.forEach((registro) => {
+    const snapshot = await getDocs(
+      collection(db, "livros")
+    );
 
-    const livro = {
-      id: registro.id,
-      ...registro.data()
-    };
+    snapshot.forEach((registro) => {
 
-    tabela.innerHTML += `
-      <tr>
-        <td>${livro.id}</td>
-        <td>${livro.nome}</td>
-        <td>${livro.autor}</td>
-        <td>${livro.genero}</td>
-        <td>${livro.exemplares}</td>
-        <td>
-          <button
-            onclick="remover('${livro.id}')"
-            class="btn btn-danger btn-sm">
-            Excluir
-          </button>
-        </td>
-      </tr>
-    `;
-  });
+      const livro = {
+        id: registro.id,
+        ...registro.data()
+      };
+
+      tabela.innerHTML += `
+        <tr>
+          <td>${livro.id}</td>
+          <td>${livro.nome}</td>
+          <td>${livro.autor}</td>
+          <td>${livro.genero}</td>
+          <td>${livro.exemplares}</td>
+          <td>
+            <button
+              onclick="remover('${livro.id}')"
+              class="btn btn-danger btn-sm">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+  } catch (erro) {
+
+    console.error("ERRO AO LISTAR:", erro);
+
+  }
 
 }
 
 // EXCLUIR
 window.remover = async (id) => {
 
-  await deleteDoc(
-    doc(db, "livros", id)
-  );
+  try {
 
-  carregar();
+    await deleteDoc(
+      doc(db, "livros", id)
+    );
+
+    carregar();
+
+  } catch (erro) {
+
+    console.error("ERRO AO EXCLUIR:", erro);
+
+  }
 
 };
 
