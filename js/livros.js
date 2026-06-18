@@ -1,5 +1,3 @@
-form.addEventListener("submit", async (e) => {
-
 console.log("TESTE LIVROS FIREBASE");
 
 import { db } from "./firebase.js";
@@ -24,11 +22,15 @@ const exemplares = document.getElementById("exemplares");
 // CADASTRAR
 form.addEventListener("submit", async (e) => {
 
+  console.log("ENTREI NO SUBMIT");
+
   e.preventDefault();
 
   try {
 
-    await addDoc(
+    console.log("ANTES DO FIREBASE");
+
+    const docRef = await addDoc(
       collection(db, "livros"),
       {
         nome: nomeLivro.value,
@@ -37,6 +39,9 @@ form.addEventListener("submit", async (e) => {
         exemplares: exemplares.value
       }
     );
+
+    console.log("SALVOU NO FIREBASE");
+    console.log("ID:", docRef.id);
 
     document.getElementById("msgLivro").innerHTML = `
       <div class="alert alert-success">
@@ -49,6 +54,8 @@ form.addEventListener("submit", async (e) => {
     carregar();
 
   } catch (erro) {
+
+    console.error("ERRO FIREBASE:", erro);
 
     document.getElementById("msgLivro").innerHTML = `
       <div class="alert alert-danger">
