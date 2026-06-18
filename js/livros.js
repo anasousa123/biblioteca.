@@ -1,5 +1,9 @@
 console.log("TESTE LIVROS FIREBASE");
 
+const form = document.getElementById("formLivro");
+
+console.log("FORM:", form);
+
 import { db } from "./firebase.js";
 
 import {
