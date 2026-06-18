@@ -1,7 +1,3 @@
-form.addEventListener("submit", async (e) => {
-
-console.log("VERSAO FIREBASE ALUNOS");
-
 import { db } from "./firebase.js";
 
 import {
@@ -11,6 +7,8 @@ import {
   deleteDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+console.log("VERSAO FIREBASE ALUNOS");
 
 const form = document.getElementById("formAluno");
 const tabela = document.getElementById("tabela");
@@ -23,6 +21,9 @@ const email = document.getElementById("email");
 
 // CADASTRAR
 form.addEventListener("submit", async (e) => {
+
+  console.log("ENTREI NO SUBMIT");
+
   e.preventDefault();
 
   try {
@@ -45,6 +46,8 @@ form.addEventListener("submit", async (e) => {
     carregar();
 
   } catch (erro) {
+
+    console.error("ERRO FIREBASE:", erro);
 
     document.getElementById("msg").innerHTML = `
       <div class="alert alert-danger">
