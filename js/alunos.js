@@ -8,7 +8,7 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-console.log("VERSAO FIREBASE ALUNOS");
+console.log("teste");
 
 const form = document.getElementById("formAluno");
 const tabela = document.getElementById("tabela");
