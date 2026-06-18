@@ -1,3 +1,5 @@
+form.addEventListener("submit", async (e) => {
+
 console.log("VERSAO FIREBASE ALUNOS");
 
 import { db } from "./firebase.js";
