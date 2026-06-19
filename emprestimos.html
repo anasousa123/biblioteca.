@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 <meta charset="UTF-8">
 <title>Empréstimos</title>
@@ -31,31 +32,74 @@
 <form id="formEmprestimo" class="row g-3 mb-5">
 
 <div class="col-md-6">
-<select id="aluno" class="form-select" required>
-<option value="">Selecione um aluno</option>
-</select>
+
+<label class="form-label">Aluno</label>
+
+<input
+type="text"
+id="aluno"
+class="form-control"
+list="listaAlunos"
+placeholder="Digite o nome do aluno"
+required>
+
+<datalist id="listaAlunos"></datalist>
+
 </div>
 
 <div class="col-md-6">
-<select id="livro" class="form-select" required>
-<option value="">Selecione um livro</option>
-</select>
+
+<label class="form-label">Livro</label>
+
+<input
+type="text"
+id="livro"
+class="form-control"
+list="listaLivros"
+placeholder="Digite o nome do livro"
+required>
+
+<datalist id="listaLivros"></datalist>
+
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Data do Empréstimo</label>
-<input type="date" id="dataEmp" class="form-control" required>
+
+<label class="form-label">
+Data do Empréstimo
+</label>
+
+<input
+type="date"
+id="dataEmp"
+class="form-control"
+required>
+
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Data Prevista de Devolução</label>
-<input type="date" id="dataDev" class="form-control">
+
+<label class="form-label">
+Data Prevista de Devolução
+</label>
+
+<input
+type="date"
+id="dataDev"
+class="form-control">
+
 </div>
 
 <div class="col-12">
-<button type="submit" class="btn btn-primary">
+
+<button
+type="submit"
+class="btn btn-primary">
+
 Emprestar
+
 </button>
+
 </div>
 
 </form>
@@ -63,28 +107,39 @@ Emprestar
 <h3>Pendentes</h3>
 
 <table class="table table-bordered">
+
 <thead class="table-dark">
+
 <tr>
 <th>Aluno</th>
 <th>Livro</th>
+<th>Data Empréstimo</th>
 <th>Ação</th>
 </tr>
+
 </thead>
 
 <tbody id="pendentes"></tbody>
+
 </table>
 
 <h3>Devolvidos</h3>
 
 <table class="table table-bordered">
+
 <thead class="table-dark">
+
 <tr>
 <th>Aluno</th>
 <th>Livro</th>
+<th>Data Empréstimo</th>
+<th>Data Devolução</th>
 </tr>
+
 </thead>
 
 <tbody id="devolvidos"></tbody>
+
 </table>
 
 </div>
