@@ -9,6 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 console.log("DB:", db);
 console.log("EMPRESTIMOS CARREGOU");
+alert("EMPRESTIMOS.JS CARREGOU");
 
 const alunoInput = document.getElementById("aluno");
 const livroInput = document.getElementById("livro");
