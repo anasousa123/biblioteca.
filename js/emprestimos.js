@@ -7,7 +7,7 @@ import {
   updateDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+console.log("DB:", db);
 console.log("EMPRESTIMOS CARREGOU");
 
 const alunoInput = document.getElementById("aluno");
