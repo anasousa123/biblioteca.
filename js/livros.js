@@ -6,8 +6,7 @@ import {
   getDocs,
   deleteDoc,
   doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-alert("JS CARREGOU");
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firebase-app.js"
 
 
 console.log("TESTE LIVROS FIREBASE");

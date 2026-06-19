@@ -121,6 +121,5 @@ window.remover = async (id) => {
 
   carregar();
 };
-
 // CARREGAR AO ABRIR
 carregar();
