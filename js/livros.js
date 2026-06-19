@@ -70,7 +70,8 @@ async function carregar() {
 
     tabela.innerHTML += `
       <tr>
-        <td>${livro.id}</td>
+       <td>${livro.codigo}</td>
+<td style="width: 35%">${livro.nome}</td>
         <td>${livro.nome}</td>
         <td>${livro.autor}</td>
         <td>${livro.genero}</td>
