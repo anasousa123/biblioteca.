@@ -24,14 +24,15 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const docRef = await addDoc(
-      collection(db, "livros"),
-      {
-        nome: nomeLivro.value,
-        autor: autor.value,
-        genero: genero.value,
-        exemplares: exemplares.value
-      }
-    );
+  collection(db, "livros"),
+  {
+    codigo: Number(document.getElementById("idLivro").value),
+    nome: nomeLivro.value,
+    autor: autor.value,
+    genero: genero.value,
+    exemplares: exemplares.value
+  }
+);
 
     console.log("SALVOU NO FIREBASE ID:", docRef.id);
 
