@@ -19,22 +19,22 @@ const genero = document.getElementById("genero");
 const exemplares = document.getElementById("exemplares");
 
 // CADASTRAR
+// CADASTRAR
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
-    const docRef = await addDoc(
-  collection(db, "livros"),
-  {
-    codigo: Number(document.getElementById("idLivro").value),
-    nome: nomeLivro.value,
-    autor: autor.value,
-    genero: genero.value,
-    exemplares: exemplares.value
-  }
-);
 
-    console.log("SALVOU NO FIREBASE ID:", docRef.id);
+    const docRef = await addDoc(
+      collection(db, "livros"),
+      {
+        codigo: Number(document.getElementById("idLivro").value),
+        nome: nomeLivro.value,
+        autor: autor.value,
+        genero: genero.value,
+        exemplares: exemplares.value
+      }
+    );
 
     document.getElementById("msgLivro").innerHTML = `
       <div class="alert alert-success">
@@ -46,6 +46,7 @@ form.addEventListener("submit", async (e) => {
     carregar();
 
   } catch (erro) {
+
     console.error("ERRO FIREBASE:", erro);
 
     document.getElementById("msgLivro").innerHTML = `
