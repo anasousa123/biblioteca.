@@ -69,14 +69,12 @@ async function carregar() {
     };
 
     tabela.innerHTML += `
-      <tr>
-       <td>${livro.codigo}</td>
-<td style="width: 35%">${livro.nome}</td>
-        <td>${livro.nome}</td>
-        <td>${livro.autor}</td>
-        <td>${livro.genero}</td>
-        <td>${livro.exemplares}</td>
-        <td>
+  <tr>
+    <td>${livro.codigo}</td>
+    <td>${livro.nome}</td>
+    <td>${livro.autor}</td>
+    <td>${livro.genero}</td>
+    <td>${livro.exemplares}</td>
           <button onclick="remover('${livro.id}')" class="btn btn-danger btn-sm">
             Excluir
           </button>
