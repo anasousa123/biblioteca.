@@ -10,8 +10,11 @@ import {
 
 console.log("EMPRESTIMOS CARREGOU");
 
-const selAluno = document.getElementById("aluno");
-const selLivro = document.getElementById("livro");
+const alunoInput = document.getElementById("aluno");
+const livroInput = document.getElementById("livro");
+
+const listaAlunos = document.getElementById("listaAlunos");
+const listaLivros = document.getElementById("listaLivros");
 
 const dataEmprestimo = document.getElementById("dataEmp");
 const dataDevolucao = document.getElementById("dataDev");
@@ -21,11 +24,8 @@ async function carregarSelects() {
 
   try {
 
-    selAluno.innerHTML =
-      '<option value="">Selecione um aluno</option>';
-
-    selLivro.innerHTML =
-      '<option value="">Selecione um livro</option>';
+    listaAlunos.innerHTML = "";
+    listaLivros.innerHTML = "";
 
     const alunosSnap = await getDocs(
       collection(db, "alunos")
@@ -35,10 +35,8 @@ async function carregarSelects() {
 
       const aluno = docItem.data();
 
-      selAluno.innerHTML += `
-        <option value="${docItem.id}">
-          ${aluno.nome}
-        </option>
+      listaAlunos.innerHTML += `
+        <option value="${aluno.nome}">
       `;
     });
 
@@ -50,16 +48,17 @@ async function carregarSelects() {
 
       const livro = docItem.data();
 
-      selLivro.innerHTML += `
-        <option value="${docItem.id}">
-          ${livro.nome}
-        </option>
+      listaLivros.innerHTML += `
+        <option value="${livro.nome}">
       `;
     });
 
   } catch (erro) {
 
-    console.error("ERRO AO CARREGAR SELECTS:", erro);
+    console.error(
+      "ERRO AO CARREGAR LISTAS:",
+      erro
+    );
 
   }
 }
@@ -73,20 +72,11 @@ document
 
     try {
 
-      console.log("CADASTRANDO EMPRÉSTIMO");
-
       await addDoc(
         collection(db, "emprestimos"),
         {
-          aluno:
-            selAluno.options[
-              selAluno.selectedIndex
-            ].text,
-
-          livro:
-            selLivro.options[
-              selLivro.selectedIndex
-            ].text,
+          aluno: alunoInput.value,
+          livro: livroInput.value,
 
           data_emprestimo:
             dataEmprestimo.value,
@@ -99,7 +89,9 @@ document
         }
       );
 
-      alert("Empréstimo cadastrado com sucesso!");
+      alert(
+        "Empréstimo cadastrado com sucesso!"
+      );
 
       document
         .getElementById("formEmprestimo")
@@ -109,13 +101,18 @@ document
 
     } catch (erro) {
 
-      console.error("ERRO FIREBASE:", erro);
+      console.error(
+        "ERRO FIREBASE:",
+        erro
+      );
 
       alert(
         "Erro ao cadastrar: " +
         erro.message
       );
+
     }
+
   });
 
 // LISTAR
@@ -170,7 +167,9 @@ async function carregar() {
             <td>${e.data_devolucao}</td>
           </tr>
         `;
+
       }
+
     });
 
   } catch (erro) {
@@ -181,6 +180,7 @@ async function carregar() {
     );
 
   }
+
 }
 
 // DEVOLVER
@@ -208,6 +208,7 @@ window.devolver = async (id) => {
     );
 
   }
+
 };
 
 carregarSelects();
