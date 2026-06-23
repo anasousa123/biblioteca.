@@ -59,32 +59,66 @@ form.addEventListener("submit", async (e) => {
 
 // LISTAR
 async function carregar() {
+
   tabela.innerHTML = "";
 
-  const snapshot = await getDocs(collection(db, "livros"));
+  const snapshot = await getDocs(
+    collection(db, "livros")
+  );
+
+  let livros = [];
 
   snapshot.forEach((registro) => {
-    const livro = {
+
+    livros.push({
       id: registro.id,
       ...registro.data()
-    };
+    });
+
+  });
+
+  // Ordena por gênero
+  livros.sort((a, b) => {
+
+    const comparaGenero =
+      a.genero.localeCompare(
+        b.genero,
+        "pt-BR"
+      );
+
+    if (comparaGenero !== 0) {
+      return comparaGenero;
+    }
+
+    return a.nome.localeCompare(
+      b.nome,
+      "pt-BR"
+    );
+
+  });
+
+  livros.forEach((livro) => {
 
     tabela.innerHTML += `
-  <tr>
-    <td>${livro.codigo}</td>
-    <td>${livro.nome}</td>
-    <td>${livro.autor}</td>
-    <td>${livro.genero}</td>
-    <td>${livro.exemplares}</td>
-          <button onclick="remover('${livro.id}')" class="btn btn-danger btn-sm">
+      <tr>
+        <td>${livro.codigo}</td>
+        <td>${livro.nome}</td>
+        <td>${livro.autor}</td>
+        <td>${livro.genero}</td>
+        <td>${livro.exemplares}</td>
+        <td>
+          <button
+            onclick="remover('${livro.id}')"
+            class="btn btn-danger btn-sm">
             Excluir
           </button>
         </td>
       </tr>
     `;
-  });
-}
 
+  });
+
+}
 // EXCLUIR
 window.remover = async (id) => {
   try {
